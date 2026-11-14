@@ -1,0 +1,265 @@
+% Fact sheets for rewriting the paper in your own words. NOT part of the paper.
+% Numbers come from numbers.tex (same as the paper), so they always match.
+% Build: tectonic factsheets.tex   ->  factsheets.pdf
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\setlist{itemsep=2pt, topsep=3pt}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\input{numbers}
+\newcommand{\how}[1]{\par\smallskip\noindent\textcolor{gray}{\small\emph{How to write it:} #1}\par}
+
+\title{Fact sheets for rewriting the paper\\\large Facts only, no sentences to copy}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{How to use these.} For each section: (1) read the facts; (2) close
+this file and explain the section out loud, as if to a friend; (3) write what you
+said, one fact per sentence, using ``we''; (4) check every fact below made it in
+and none changed meaning. In the paper, type the number \emph{commands} (shown in
+grey boxes where useful), never the numbers themselves.
+
+% ---------------------------------------------------------------
+\section*{Abstract (write this last)}
+\begin{itemize}
+  \item Hook: machine learning predicts 71\% of mutual fund managers' trade
+  directions; the trades it cannot predict earn more (Cohen, Lu \& Nguyen).
+  \item Question: are hedge funds as predictable?
+  \item Data: free SEC filings, 2013--2026; one identical pipeline.
+  \item Task: predict buy / hold / sell for each \emph{existing} position among the
+  500 most widely held U.S.\ stocks, before the fund's filing is public.
+  \item Samples: two hedge fund samples (hand-picked; selected by rule from
+  2012--13 Form ADV, \emph{before} the sample starts). Comparisons: active
+  long-only managers; N-PORT mutual funds, individually and by family.
+  \item Main result: the model fixes only \errredM\% of the errors of each fund's
+  majority action (\gainM{} points); the median fund gains nothing.
+  \item Checks: the pipeline finds planted signals of moderate strength; more
+  training history barely helps.
+  \item Comparison: long-only managers and individual mutual funds are not
+  significantly more predictable; adding funds up does not significantly change
+  this; 2017--2019 is no more predictable than 2022--2026.
+  \item Foundation models: three zero-shot models do no better than the baseline
+  in per-fund accuracy.
+  \item Returns: unpredicted sells by the hand-picked funds fall more before
+  disclosure, but this weakens when stocks are matched on size and momentum and
+  does not replicate; otherwise no extra return; 18 quarters cannot rule out an
+  effect as large as the mutual-fund one.
+\end{itemize}
+
+% ---------------------------------------------------------------
+\section*{1. Introduction (write second to last)}
+\textbf{Paragraph 1: the motivation}
+\begin{itemize}
+  \item Cohen, Lu \& Nguyen: LSTMs on mutual fund holdings predict 71\% of
+  next-quarter trade directions vs 52\% for each fund's most common action;
+  the managers and positions the model cannot predict outperform.
+  \item Hedge funds are the natural next test: \$5.4 trillion net assets
+  (\$12.6 trillion gross) reported to the SEC in early 2025; fewer trading
+  constraints; thought to trade on private information.
+  \item Their only public record of stock positions is the quarterly 13F, which
+  many investors read to copy them.
+  \item Time-series foundation models promise forecasts without task-specific
+  training, but their value in finance is contested.
+\end{itemize}
+\textbf{The three questions}
+\begin{itemize}
+  \item RQ1: how predictable are hedge funds' trades from public information,
+  compared with other managers and individual funds measured the same way?
+  \item RQ2: do foundation models or news improve the prediction?
+  \item RQ3: do the trades that cannot be predicted earn more?
+\end{itemize}
+\textbf{Framing}: answers are mostly negative; we designed the study so each
+negative answer says what size of effect it rules out, and closed the obvious
+loopholes (leakage, survivorship, weak models, class imbalance, comparing
+across studies).
+
+\noindent\textbf{Contributions (4)}
+\begin{enumerate}
+  \item First application of the trade-direction design to hedge funds (earlier
+  13F work predicts portfolio weights); free public data; five samples:
+  \fundsallM{} hand-picked hedge funds, \fundsallA{} Form ADV hedge funds,
+  \fundsallL{} long-only managers, \fundsallN{} mutual funds, individually and
+  by family.
+  \item Hedge funds' trades are hard to predict but not unusual; aggregation
+  doesn't change it; the oracle shows a fund's stock choices stay unpredictable
+  even when its overall direction is known.
+  \item Three zero-shot foundation models (Chronos-2, TimesFM, a Chronos trained
+  only on financial data before our test period) and news over several windows.
+  \item Positive controls; a multiple-testing-corrected return test with power
+  stated; an input-scrambling leakage audit; a classic look-ahead bias that
+  inflated our own early results (conditioning on future index membership).
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\section*{2. Related work}
+\textbf{Holdings, herding, skill}
+\begin{itemize}
+  \item Quarterly holdings are the standard window into what institutions trade.
+  \item Herding: Lakonishok--Shleifer--Vishny (1992), Wermers (1999), Sias (2004).
+  \item Skill revealed by trades: Chen--Jegadeesh--Wermers (2000); performance
+  measured against characteristic-matched benchmarks: Daniel et al.\ (1997).
+  \item Hedge funds in 13F: rode the tech bubble and exited before the crash
+  (Brunnermeier \& Nagel); only weak evidence they pick better stocks than mutual
+  funds (Griffin \& Xu); positions they delay disclosing earn abnormal returns
+  (Agarwal et al.; Aragon et al.).
+  \item Demand-system models of holdings: Koijen \& Yogo.
+  \item Copycats: funds copying disclosed portfolios can match or beat the
+  originals (Frank et al.; Verbeek \& Wang).
+\end{itemize}
+\textbf{Predicting managers' trades}
+\begin{itemize}
+  \item Cohen et al.: 71\% vs 52\%, Morningstar 1990--2023, per-fund LSTMs;
+  unpredictable managers/positions outperform.
+  \item Izadifar \& Rahmati: forecast 13F portfolio \emph{weights} for 99 managers
+  with temporal graph models; a simple persistence forecast beats all but one.
+\end{itemize}
+\textbf{Foundation models in finance}
+\begin{itemize}
+  \item Chronos, Chronos-2, TimesFM: zero-shot forecasting.
+  \item Rahimikia et al.: off-the-shelf models forecast daily excess returns
+  poorly; training only on financial data works better; per-year models released.
+  \item Noguer i Alonso \& Pereira Franklin: on five large U.S.\ stocks, gains over
+  a random walk are small and sparse.
+  \item Zhang \& Zhang: review LLM stock forecasting; stress pitfalls including data
+  leakage, dataset and horizon design, evaluation metrics.
+  \item We test foundation models on position sizes, not prices.
+\end{itemize}
+\textbf{News}: FNSPID headlines scored with FinBERT; policy uncertainty index
+(Baker, Bloom \& Davis); Gao et al.\ propose a test for LLM lookahead bias.
+
+% ---------------------------------------------------------------
+\section*{3. Data (write this first)}
+\textbf{Holdings}
+\begin{itemize}
+  \item SEC Form 13F data sets: 54 files (quarterly releases to 2023, then
+  three-month windows), every report filed July 2013--August 2026, holdings for
+  2013Q2--2026Q2.
+  \item Who files: managers with at least \$100 million in Section 13(f)
+  securities; long positions; within 45 days of quarter-end.
+  \item A 13F covers the whole firm, not one fund; we still call each filer a
+  ``fund''.
+  \item Cleaning: common shares only; latest restatement plus amendments that add
+  positions; values converted to dollars (SEC switched from thousands in Jan 2023).
+\end{itemize}
+\textbf{Samples}
+\begin{itemize}
+  \item Hand-picked: 49 well-known hedge funds across styles; written rules
+  (use the entity that reports holdings, join entity changes, exclude market
+  makers / family offices / long-only).
+  \item Form ADV: a 2026 list risks favoring survivors, so we pick by rule from
+  ADV filings of July 2012--June 2013. Rules: hedge funds $\ge$ \$1B, $\ge$ half
+  of private-fund assets, $\ge$ a quarter of regulatory assets; link to 13F by CIK
+  or exact name; $\ge$ 10 holdings in June 2013; 100 largest (99 hold universe
+  stocks). Follows each adviser's 2013 filer (doesn't follow e.g.\ SAC into Point72).
+  \item Long-only: $>75\%$ of assets from mutual funds; essentially no hedge funds;
+  $\ge$ \$1B; active share $\ge 0.6$ (excludes Vanguard, Fidelity's firm-wide
+  filing). Three ETF sponsors pass (no ETF flag before 2018); results without them
+  reported. Same aggregation level as hedge funds.
+  \item N-PORT mutual funds: individual funds (the unit of Cohen et al.), from late
+  2019; as of Dec 2019, active U.S.\ equity funds ($\ge$ 20 universe stocks, $\ge$
+  60\% of net assets, active share $\ge 0.6$, not ETFs), 300 largest; also added up
+  to their families (registrants with $\ge$ 2 funds; only complete quarters).
+\end{itemize}
+\textbf{Stock universe}
+\begin{itemize}
+  \item 500 largest stocks by total institutional holdings across all 13F filers,
+  each quarter; robust to unit errors (drop filers whose price is $>5\times$ off).
+  \item Excludes debt, ETFs, funds, ADRs (about \univtype{} of the top 500 per
+  quarter) and stocks with $<100$ holders (another \univholders).
+  \item Built from SEC data so it keeps later-delisted companies; the S\&P 500
+  would lose 10--28\% of early members. Membership fixed at $t-1$.
+\end{itemize}
+\textbf{Market data and news}: OpenFIGI CUSIP$\to$ticker; Yahoo prices for
+3,104 tickers (through June 2026; October 2026 for returns), archived; FNSPID
+1.4M headlines for 676 stocks (2013--2023), FinBERT; policy uncertainty index;
+Fama--French factors.
+
+% ---------------------------------------------------------------
+\section*{4. Method (write this second)}
+\begin{itemize}
+  \item Labels: compare split-adjusted shares at $t$ vs $t-1$: BUY if up $\ge1\%$,
+  SELL if down $\ge1\%$, else HOLD; a full exit is SELL. Same rule as Cohen et al.
+  \item Split checks: 9 hand-checked cases pass; at most \splitlikepct\% of cases
+  look like a missed split (upper bound); \cusipchangen{} CUSIP-change artefacts.
+  \item Task: positions held at $t-1$; features use only filings public by 45 days
+  into quarter $t$. New positions excluded (\newM\% of labels), as in Cohen et al.
+  \item Split by time: train 2013Q3--2020Q4, validate 2021, test 2022Q1--2026Q2.
+  \item Features: last 3 actions, holding age, weight, rank, fund size/turnover/
+  buy share/long-run average, stock return, momentum, size, peers' trades (same
+  sample), policy uncertainty.
+  \item Models: majority, recent majority, repeat, rule; logistic regression;
+  LightGBM (settings fixed in advance); LSTM over 8 quarters; Chronos-2, TimesFM,
+  finance-trained Chronos (zero-shot, decile forecasts $\to$ score $\to$ label via
+  cut-offs tuned on 2021); hybrids with forecasts or news; diagnostics (fund
+  weights, no peers, oracle).
+  \item Metrics: mean per-fund accuracy (main), pooled accuracy, macro-F1, errors
+  fixed, log-loss reduction, BUY-vs-SELL AUC; intervals resample funds.
+  \item Leakage audit: scramble all inputs dated $\ge T$, features for $T$ unchanged
+  (3 quarters); only 0.03\% of inputs filed too late.
+  \item Returns: window from quarter-end to each fund's filing date (max 45 days);
+  3 spreads (sells, buys, stocks); 18 quarters; Newey--West, $t$-distribution,
+  Holm within and across samples; secondary versions listed in the paper.
+\end{itemize}
+
+% ---------------------------------------------------------------
+\section*{5. Results}
+\subsection*{RQ1}
+\begin{itemize}
+  \item LightGBM: \baseM\% $\to$ \lgbM\%, gain \gainM{} [\gainloM, \gainhiM].
+  LSTM \lstmM\%, logistic \logitM\%. Simple rules worse than baseline.
+  \item Median fund gains \medgainM; gain comes from \nlowbaseM{} funds without a
+  dominant action (\gainlowbaseM{} vs \gainrestM{} for the rest).
+  \item Errors fixed \errredM\%; AUC \aucbsM. Habit, not herding.
+  \item Robust: per-fund protocol \protfundgainM; BUY/SELL only \bsgainM; HOLD
+  band \hbgainM; without multi-strategy/quant \exmqgain; dollar-weighted \dwgain.
+  \item Positive controls: planted rules recovered; weaker planted signals
+  \grrecsixty\% recovered; 6 vs all training quarters \lcsixM{} vs \lcallM;
+  2017--19 \earlyM; tuning \tunedM.
+  \item Comparison: long-only \gainL{} (\errredL\%), N-PORT funds \gainN{}
+  (\errredN\%), families \gainP{} (\errredP\%); none significantly different;
+  far below 40\%.
+  \item Mechanisms: oracle \oraclegainM; with oracle feature \lgboraclegainM;
+  opaque-stocks test and number-of-holdings test don't single out hedge funds.
+\end{itemize}
+\subsection*{RQ2}
+\begin{itemize}
+  \item Zero-shot per-fund: Chronos-2 \chronosM\%, TimesFM \timesfmM\%,
+  finance Chronos \fintextM\% vs baseline \baseM\%. Pooled: Chronos-2
+  \chronospooledM\% vs \basepooledM\%. AUC \aucchronosM, \auctimesfmM,
+  \aucfintextM{} vs LightGBM \auclgbM.
+  \item As features: Chronos-2 \rqtwochronos{} [\rqtwochronoslo, \rqtwochronoshi],
+  gone in 2022--23; TimesFM and news (any window) nothing; max upper bound
+  \rqtwomaxhi.
+\end{itemize}
+\subsection*{RQ3}
+\begin{itemize}
+  \item Hand-picked surprise sells: \pdsellsM\% ($t=\pdsellstM$, Holm
+  \pdsellsholmM{} / \pdsellsholmallM); size--momentum matched \pdsellschM;
+  within fund \wfsellsM{} ($t=\wfsellstM$); not in Form ADV or long-only.
+  \item Link: sells against a fund's direction resemble discretionary trades
+  (Alexander, Cici \& Gibson).
+  \item Buys, stocks, intensity, unconditional: nothing. Copier window: nothing.
+  \item Power: can't rule out the mutual-fund-sized effect.
+\end{itemize}
+
+% ---------------------------------------------------------------
+\section*{6. Discussion and 7. Conclusion}
+\begin{itemize}
+  \item Hard to predict beyond habit, but not unusual; not period, not history
+  length, not aggregation; remaining difference with Cohen et al.\ is the data.
+  \item Practical: holdings disclosures give little predictability beyond habit
+  for any manager; unpredicted trades aren't a reliable signal.
+  \item Foundation models: short, decision-driven series; next step is
+  training on holdings.
+  \item Pitfalls: future-index-membership look-ahead; entity changes (Winton).
+  \item Threats: what 13F shows; sample selection; new positions excluded;
+  data and power.
+  \item Future work: LLM reading news (with lookahead check), foundation models
+  trained on holdings, predicting new positions.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,128 @@
+\section{Method}
+\label{sec:method}
+
+\paragraph{Labels.} Following~\cite{cohen2026mimicking}, for fund $i$, stock $s$
+and quarter $t$ we compare split-adjusted shares $sh_{i,s,t}$ with
+$sh_{i,s,t-1}$:
+\[
+y_{i,s,t} =
+\begin{cases}
+\text{BUY} & \text{if } sh_{i,s,t} / sh_{i,s,t-1} - 1 \ge 0.01,\\
+\text{SELL} & \text{if } sh_{i,s,t} / sh_{i,s,t-1} - 1 \le -0.01,\\
+\text{HOLD} & \text{otherwise,}
+\end{cases}
+\]
+so a full exit ($sh_{i,s,t}=0$) is a SELL.
+Split adjustments use Yahoo's split history for stocks with a U.S.\ ticker and
+a holdings-based detector for the rest; the adjustment passes nine
+hand-checked cases (e.g.\ Apple 4:1 in 2020, NVIDIA 10:1 in 2024, AMD with no
+split). No labels are formed across a missed filing. At most \splitlikepct\%
+of prediction cases have a share ratio within 0.2\% of a split ratio with no
+split applied, an upper bound on missed splits since many are trades that
+exactly double or halve a position, and only \cusipchangen{} test-period
+exits (\cusipchangepct\% of SELLs) coincide with a new position in a
+different CUSIP of the same issuer, the signature of a CUSIP change.
+
+\paragraph{Prediction task and timing.} As in~\cite{cohen2026mimicking}, we
+predict $y_{i,s,t}$ for positions held at the end of $t-1$. Features use only
+13F reports for quarter $t-1$ and earlier, which are public by 45 days into
+quarter $t$, plus prices and indices up to the end of $t-1$; the prediction is
+therefore available before the fund's report for quarter $t$ is due. Like
+\cite{cohen2026mimicking}, we exclude new positions (zero shares at $t-1$,
+\newM\% of labels in the main sample): predicting \emph{which} of 500 stocks a
+fund will start buying is a different, far more imbalanced task, and we leave
+it to future work. Data are split by time: training 2013Q3--2020Q4, validation
+2021 (early stopping and threshold choice only), test 2022Q1--2026Q2.
+
+\paragraph{Features.} The fund's last three actions on the stock; holding age;
+portfolio weight and rank; the fund's number of holdings, last-quarter
+turnover and buy share, and long-run average action; the stock's last-quarter
+return, four-quarter momentum and size rank; the share of the other funds
+\emph{in the same sample} that bought or sold the stock last quarter; and
+average policy uncertainty.
+
+\paragraph{Models.} \emph{Baselines:} each fund's most common training
+action (the baseline of~\cite{cohen2026mimicking}); its most common action
+over the previous eight quarters; the fund's last action on the stock; and a
+one-line rule (BUY if the fund bought more than it sold last quarter). \emph{Learned models:} multinomial logistic regression with fund
+dummies; LightGBM (multiclass, 63 leaves, learning rate 0.05, at least 200
+cases per leaf, feature and row subsampling 0.8, L2 penalty 1, no class
+weights, early stopping on 2021, fund identity as a categorical feature); and
+an LSTM, the model family of~\cite{cohen2026mimicking}, which reads the
+position's last eight quarters (action, log change in shares, log portfolio
+weight, held flag) with one 32-unit layer and joins the standardized static
+features and an 8-dimensional fund embedding in a 64-unit head (dropout 0.2;
+Adam, learning rate $2\cdot10^{-3}$, weight decay $10^{-4}$; batches of 512;
+early stopping on 2021 log-loss). All hyperparameters were fixed in advance
+rather than tuned; 2021 is used only for early stopping and cut-offs. Per-fund
+variants use the same models with smaller capacity (16-unit LSTM, 15 epochs;
+logistic regression with $C = 0.5$). \emph{Foundation models,
+zero-shot:} Chronos-2~\cite{ansari2025chronos2} (\texttt{amazon/chronos-2})
+and TimesFM~2.5~\cite{das2024timesfm} (200M parameters) forecast the
+position's split-adjusted share history (up to 32 quarters, normalized to 1 at
+$t-1$); for Chronos-2 we also add stock returns and policy uncertainty as
+covariates; and
+a Chronos model pre-trained from scratch on U.S.\ stock returns up to
+2020~\cite{rahimikia2025tsfm} (\texttt{FinText/Chronos\_Small\_2020\_US}),
+which has never seen our validation or test years, forecasts the position's
+quarterly log changes. Each model returns nine quantiles (deciles 0.1--0.9), which give
+$P(\text{up}>1\%) - P(\text{down}>1\%)$; two cut-offs chosen on 2021 map this
+score to a label, and we also evaluate the score's ranking (AUC).
+\emph{Diagnostics:} LightGBM trained with equal total weight per fund; LightGBM
+without the peer features; and an oracle that is told each fund's actual net
+direction in quarter $t$ (BUY if it bought more of its positions than it
+sold), used alone or as an extra LightGBM feature. \emph{Hybrid and news variants} add to LightGBM the foundation
+models' forecasts, or news features (headline count, mean FinBERT sentiment,
+shares of clearly positive and negative headlines, change in sentiment) from
+quarter $t-1$ (a forecast) or quarter $t$ (a nowcast, still made before the
+13F report for $t$ is public), averaged over the quarter or over its last 15
+days only. Headlines that mention a stake, a 13F, 13D or 13G filing, or an
+investor taking, raising, lowering, cutting or exiting a position (0.7\%) are
+removed first, so news that reports a fund's own trade cannot leak into its
+prediction.
+
+\paragraph{Metrics.} Mean per-fund accuracy (the measure
+of~\cite{cohen2026mimicking}), pooled accuracy and macro-F1, and three
+measures that do not depend on the class mix: the share of the baseline's
+errors that the model fixes, the reduction in log-loss relative to each fund's
+training class frequencies, and the AUC for BUY versus SELL. Confidence
+intervals resample whole funds (2,000 draws).
+
+\paragraph{Leakage audit.} For three test quarters $T$ (2022Q1, 2024Q2,
+2026Q1) we replace every input dated in quarter $T$ or later (holdings,
+actions, prices, 13F-implied prices, universe ranks, policy uncertainty) with
+random values and rebuild the features: the features for quarter $T$ are
+unchanged in all three cases, while those for $T+1$ change, as they should.
+Inputs are also public in time: only 0.03\% of the holdings that feed
+test-period features were filed, as original reports or amendments, after the
+corresponding prediction would be made.
+
+\paragraph{Returns (RQ3).} A test-period trade is \emph{predicted} if the
+model's label matches the fund's action and a \emph{surprise} otherwise. The
+primary test uses the pre-disclosure window: from the end of quarter $t$ to
+the day the fund's 13F for $t$ became public (its first filing, capped at the
+45-day deadline). For each trade we take the stock's dividend-adjusted return
+over this window minus the average universe stock's, average across trades
+each quarter, and form three spreads (sells: predicted minus surprise; buys:
+surprise minus predicted; stocks: least minus most predictable quintile, by
+the share of their holders' trades the model predicted), so positive values
+always mean that surprising trades did better. The 18 quarterly spreads (2022Q1--2026Q2) are
+tested with Newey--West standard errors (one lag) and $t$-distribution
+$p$-values, and corrected for multiple testing with Holm's method within each
+sample and across samples. Secondary versions
+use a size- and momentum-matched benchmark (same size and momentum tercile,
+in the spirit of~\cite{daniel1997measuring}), sort trades by the model's
+probability of the action taken (surprise intensity), report all buys minus
+all sells, compare surprise and predicted trades within the same fund and
+quarter, use the quarter of the trade itself and the three months after the
+filing (a copier's window), and relate each fund's predictability to its
+trades' payoff. Calendar-time portfolios held for 3--12
+months are regressed on the Fama--French five factors~\cite{fama2015five}
+and momentum~\cite{carhart1997persistence}, with Newey--West
+errors~\cite{newey1987hac} whose lags equal the holding period. Yahoo
+returns cover stocks behind 95\% of test positions; the rest are mostly
+stocks without a current U.S.\ ticker, many of them delisted, and are spread
+evenly across buys, sells, surprises and predicted trades. As a bound we
+treat every trade without a price as a delisting that loses 30\% in the
+window. Each stock in the universe at quarter-end keeps its later returns even
+if it leaves the universe.

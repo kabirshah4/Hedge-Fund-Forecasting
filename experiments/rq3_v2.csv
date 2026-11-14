@@ -1,0 +1,55 @@
+sample,test,mean_pct,t,p,quarters,family,p_holm,ci_low,ci_high,count,share_pct,p_holm_all
+hand-picked hedge funds,unconditional,0.15873687514035706,1.3447856452230227,0.1963629612599067,18,secondary,,,,,,
+hand-picked hedge funds,sells,0.4332604356030026,3.303322160552994,0.004199866878674238,18,primary,0.012599600636022716,,,,,0.03779880190806815
+hand-picked hedge funds,buys,0.16999238550452841,0.7499209275605894,0.46355525273710746,18,primary,0.9271105054742149,,,,,1.0
+hand-picked hedge funds,stocks,-0.2079597835566784,-0.565277471139813,0.579269625621893,18,primary,0.9271105054742149,,,,,1.0
+hand-picked hedge funds,intensity sells,0.4551967000002228,1.5646785689791514,0.13608179618247532,18,secondary,,,,,,
+hand-picked hedge funds,intensity buys,0.3668160570523884,1.121424909331362,0.2776984292196956,18,secondary,,,,,,
+hand-picked hedge funds,sells (size-momentum adjusted),0.3096173329174022,1.925113248653888,0.07111376169381889,18,secondary,,,,,,
+hand-picked hedge funds,buys (size-momentum adjusted),0.07812214487461468,0.3283480045883173,0.7466583173166845,18,secondary,,,,,,
+hand-picked hedge funds,"sells (missing = delisted, -30%)",0.4225742392219468,3.1725810308280695,0.0055662890177351505,18,secondary,,,,,,
+hand-picked hedge funds,"buys (missing = delisted, -30%)",0.05041101742327746,0.2275372047350816,0.8227200520003374,18,secondary,,,,,,
+hand-picked hedge funds,sells (trade quarter),0.712006920564997,3.2732905667575207,0.004481071566607668,18,secondary,,,,,,
+hand-picked hedge funds,buys (trade quarter),0.06545260837532596,0.2970884701536679,0.769998429235929,18,secondary,,,,,,
+hand-picked hedge funds,sells (within fund-quarter),0.49768331160238327,0.9952646822603882,0.3335638728458344,18,secondary,,,,,,
+hand-picked hedge funds,buys (within fund-quarter),0.2843980461868575,0.6111702600432739,0.5491726891920218,18,secondary,,,,,,
+hand-picked hedge funds,"sells (after filing, copier)",0.30984888402449207,1.7634763629329127,0.09690388390120057,17,secondary,,,,,,
+hand-picked hedge funds,"buys (after filing, copier)",0.20080384694037717,1.0482737531537214,0.31009016443669246,17,secondary,,,,,,
+hand-picked hedge funds,"manager level: Spearman(gain, trade payoff)",-0.11592451056376414,,,18,secondary,,-0.4131191752342171,0.2101108344289625,41.0,,
+hand-picked hedge funds,trades whose stock stops trading in the window,,,,18,info,,,,0.0,0.0,
+Form ADV hedge funds,unconditional,0.15843841718941057,1.4602804706442987,0.16244751999989812,18,secondary,,,,,,
+Form ADV hedge funds,sells,0.32982031942262924,1.407121871358456,0.1774113861800737,18,primary,0.5322341585402212,,,,,1.0
+Form ADV hedge funds,buys,-0.021604671981747203,-0.0813611373299496,0.9361049781623464,18,primary,1.0,,,,,1.0
+Form ADV hedge funds,stocks,-0.19027596529175467,-0.5054483643849804,0.6197342477813017,18,primary,1.0,,,,,1.0
+Form ADV hedge funds,intensity sells,0.15714233379504053,0.76413517476958,0.4552627356720067,18,secondary,,,,,,
+Form ADV hedge funds,intensity buys,0.2066963087808857,0.5850389480588238,0.5662066193612633,18,secondary,,,,,,
+Form ADV hedge funds,sells (size-momentum adjusted),0.2476807431479753,1.2514524939051963,0.2277170100659074,18,secondary,,,,,,
+Form ADV hedge funds,buys (size-momentum adjusted),-0.058056778242192894,-0.25531535215282003,0.8015428676262241,18,secondary,,,,,,
+Form ADV hedge funds,"sells (missing = delisted, -30%)",0.32609688307349527,1.374826174137622,0.1870366451794123,18,secondary,,,,,,
+Form ADV hedge funds,"buys (missing = delisted, -30%)",-0.23045091689535363,-0.9134169903832579,0.3737964901347732,18,secondary,,,,,,
+Form ADV hedge funds,sells (trade quarter),0.44720192803788217,1.8112552636395265,0.08780764193173447,18,secondary,,,,,,
+Form ADV hedge funds,buys (trade quarter),-0.811872561784004,-4.706973145848989,0.00020317797727988353,18,secondary,,,,,,
+Form ADV hedge funds,sells (within fund-quarter),-0.3532149404456174,-0.6632715980680098,0.5160506580118902,18,secondary,,,,,,
+Form ADV hedge funds,buys (within fund-quarter),-0.21429620313190065,-0.467194897520272,0.6462927967007859,18,secondary,,,,,,
+Form ADV hedge funds,"sells (after filing, copier)",0.008829558034340436,0.0405752268051282,0.9681365374758123,17,secondary,,,,,,
+Form ADV hedge funds,"buys (after filing, copier)",-0.14485134731216442,-0.6949881319851947,0.49703250149492484,17,secondary,,,,,,
+Form ADV hedge funds,"manager level: Spearman(gain, trade payoff)",0.1604385693927539,,,18,secondary,,-0.1229597905786272,0.42558070212968513,51.0,,
+Form ADV hedge funds,trades whose stock stops trading in the window,,,,18,info,,,,0.0,0.0,
+long-only managers,unconditional,-0.19571535875407253,-1.3932021125186922,0.1815095951245796,18,secondary,,,,,,
+long-only managers,sells,0.3257023895242636,1.352266437944931,0.19400641395182153,18,primary,0.5820192418554646,,,,,1.0
+long-only managers,buys,0.23884336747798532,0.9493417196784045,0.35574873659860534,18,primary,0.5820192418554646,,,,,1.0
+long-only managers,stocks,-0.5566898129533154,-1.213527180920246,0.2415201643706261,18,primary,0.5820192418554646,,,,,1.0
+long-only managers,intensity sells,0.3720445801195848,1.3977469678819439,0.18016317173251414,18,secondary,,,,,,
+long-only managers,intensity buys,0.36731954503113406,1.5818274385393822,0.13211428525690602,18,secondary,,,,,,
+long-only managers,sells (size-momentum adjusted),0.12381787630636797,0.7719807038738359,0.4507249291138102,18,secondary,,,,,,
+long-only managers,buys (size-momentum adjusted),0.3350123782926573,1.4982736955858917,0.15240102927909177,18,secondary,,,,,,
+long-only managers,"sells (missing = delisted, -30%)",0.28951688113794116,1.0914213390237546,0.2903151218376885,18,secondary,,,,,,
+long-only managers,"buys (missing = delisted, -30%)",0.2712732043612117,0.8520265791103574,0.40604279130478627,18,secondary,,,,,,
+long-only managers,sells (trade quarter),1.072110788682284,2.9352875609576996,0.009243935215159389,18,secondary,,,,,,
+long-only managers,buys (trade quarter),-0.5076152502374245,-1.318315545721867,0.2048852251406569,18,secondary,,,,,,
+long-only managers,sells (within fund-quarter),0.4278319832332197,0.9150871924916585,0.3729439387733972,18,secondary,,,,,,
+long-only managers,buys (within fund-quarter),0.3269385106028422,0.7173076436640724,0.48292488254266025,18,secondary,,,,,,
+long-only managers,"sells (after filing, copier)",-0.07313054857850483,-0.22745985565996354,0.8227792259521279,18,secondary,,,,,,
+long-only managers,"buys (after filing, copier)",0.46454901624464334,1.7910263633157575,0.09111054840203776,18,secondary,,,,,,
+long-only managers,"manager level: Spearman(gain, trade payoff)",-0.13960248728201297,,,18,secondary,,-0.4296908363921122,0.18133227223297482,34.0,,
+long-only managers,trades whose stock stops trading in the window,,,,18,info,,,,0.0,0.0,

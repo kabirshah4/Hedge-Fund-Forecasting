@@ -1,0 +1,3 @@
+model,test_rows,accuracy,macro_f1,mean_fund_accuracy,cutoffs,share_predicted_hold,minutes
+"TimesFM 2.5, zero-shot (own history)",100935,0.5765690791103185,0.3020931313542555,0.5466174500581219,0.45/0.45,0.0,3.4716548681259156
+"Chronos-Small, finance-trained (FinText 2020)",100935,0.5663347699014217,0.24660206827621653,0.5667336097525028,0.80/0.80,0.0,11.215436402956644

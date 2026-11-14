@@ -1,0 +1,26 @@
+\begin{table}[t]
+  \caption{Can the pipeline find predictability where it exists? Top: a random 10\% or 25\% of
+  hand-picked funds is made to follow a visible rule (BUY if the stock's four-quarter momentum is
+  positive), exactly or for 80\% of positions; mean test accuracy of those funds (3 draws). Bottom:
+  gain over the majority baseline (points, 95\% interval) when testing 2017--2019 (training
+  2013Q3--2015) and with the best of 20 LightGBM configurations chosen on 2021.}
+  \label{tab:controls}
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Injected funds & Baseline & Model & Rule (ceiling) \\
+    \midrule
+    10\% of funds, exact rule & 65.8\% & 100.0\% & 100.0\% \\
+    10\% of funds, rule on 80\% & 59.0\% & 88.6\% & 88.6\% \\
+    25\% of funds, exact rule & 65.5\% & 100.0\% & 100.0\% \\
+    25\% of funds, rule on 80\% & 59.3\% & 88.2\% & 88.2\% \\
+    \midrule
+    Sample & Earlier period & Tuned & Main \\
+    \midrule
+    HF hand-picked & +0.6 [$-$1.0, 2.0] & +4.1 [2.0, 6.9] & +4.1 [1.8, 6.7] \\
+    HF Form ADV & +2.0 [0.6, 3.5] & +3.6 [1.8, 5.6] & +3.5 [1.6, 5.6] \\
+    Long-only & +6.2 [2.0, 11.7] & +6.2 [3.3, 9.6] & +6.2 [3.0, 9.5] \\
+    \bottomrule
+  \end{tabular}
+\end{table}

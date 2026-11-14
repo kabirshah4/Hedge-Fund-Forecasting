@@ -1,0 +1,60 @@
+\section{Introduction}
+
+How much of a professional investor's decision-making could a machine have
+predicted? Cohen, Lu and Nguyen~\cite{cohen2026mimicking} show that LSTMs
+trained on mutual fund managers' past holdings predict 71\% of their
+next-quarter trade directions, against 52\% for each fund's most common
+action, and that the managers and positions the model cannot predict are the
+ones that outperform. Hedge funds are the natural next test. Funds reporting
+to the SEC held \$5.4 trillion in net assets (\$12.6 trillion gross) in early
+2025~\cite{sec2025pfstats}; they face fewer trading constraints than mutual
+funds and are widely thought to trade on private
+information~\cite{agarwal2013hide, aragon2013confidential}. Their only
+public record of stock positions is the quarterly 13F filing, which many
+investors read in the hope of copying them. Time-series foundation
+models~\cite{ansari2024chronos, ansari2025chronos2, das2024timesfm} promise
+forecasts without task-specific training, though their value in finance is
+contested~\cite{rahimikia2025tsfm, zhang2026review}.
+
+We ask three questions:
+\begin{itemize}
+  \item \textbf{RQ1:} How predictable are hedge funds' quarterly trades (buy,
+  hold or sell) from information public before they are disclosed, and how
+  does that compare with other managers and individual funds measured the
+  same way?
+  \item \textbf{RQ2:} Do time-series foundation models or news improve the
+  prediction?
+  \item \textbf{RQ3:} Do the trades that cannot be predicted earn more?
+\end{itemize}
+
+Our answers are largely negative, and we designed the study so that the
+negative answers are informative: every null result comes with the size of
+effect it rules out, and we close the obvious loopholes, namely leakage,
+survivorship in the choice of funds, weak or mismatched models, class
+imbalance, and comparisons across studies.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+  \item To our knowledge, the first application of the trade-direction
+  design of~\cite{cohen2026mimicking} to hedge funds (prior 13F prediction work
+  forecasts portfolio weights~\cite{izadifar2026holdings}), built entirely from free
+  public SEC data, with one identical pipeline on five samples: 49 well-known
+  hedge funds, 99 selected by rule from Form ADV filings made before the
+  sample begins, 57 active long-only managers, and 300 active mutual funds from
+  Form N-PORT, individually and added up to their families.
+  \item Evidence that hedge funds' trades are hard to predict but not unusual:
+  long-only managers and individual mutual funds are about as hard to predict
+  in the same pipeline, and aggregation does not reduce predictability, so the
+  high predictability reported for mutual funds over 1990--2023 does not carry
+  over to our period and data. An oracle shows that even knowing a fund's
+  overall direction leaves its stock-level choices largely unpredictable.
+  \item A test of three zero-shot foundation models (Chronos-2, TimesFM, and a
+  Chronos model pre-trained only on financial data before our test period)
+  and of news sentiment over several windows, against domain-trained models.
+  \item A positive control showing that the pipeline recovers predictability
+  when it exists, a multiple-testing-corrected test of whether unpredicted
+  trades earn more before disclosure with explicit power, and a leakage-aware
+  design with an input-scrambling audit. We also report a classic
+  look-ahead bias that inflated our own early results: conditioning returns
+  on a stock's future index membership.
+\end{enumerate}

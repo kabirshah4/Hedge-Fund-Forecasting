@@ -1,0 +1,22 @@
+\begin{table}[t]
+  \caption{The three samples. Labels are quarterly position changes in the 500-stock universe,
+  2013Q3--2026Q2; prediction cases are positions held at the end of the previous quarter.}
+  \label{tab:summary}
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+     & \multicolumn{2}{c}{Hedge funds} & Long-only \\ \cmidrule(lr){2-3}
+     & Hand-picked & Form ADV & managers \\
+    \midrule
+    Funds (active in test) & 49 (49) & 99 (69) & 57 (39) \\
+    Fund-quarters & 2,374 & 3,978 & 2,173 \\
+    Median positions & 25 & 29 & 62 \\
+    Labels & 305,343 & 402,593 & 195,205 \\
+    \quad SELL/BUY/HOLD (\%) & 49/48/2 & 49/48/3 & 40/37/23 \\
+    \quad new/exits (\%) & 14/15 & 18/19 & 8/8 \\
+    Prediction cases & 261,213 & 330,793 & 179,399 \\
+    \quad test (2022Q1--26Q2) & 100,935 & 99,002 & 57,486 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

@@ -1,0 +1,27 @@
+\begin{table}[t]
+  \caption{RQ1 and RQ2, hand-picked sample: predicting hedge funds' quarterly trades, test period
+  2022Q1--2026Q2 (\testrowsM{} positions). Fund acc.\ is accuracy averaged over funds; AUC ranks
+  BUY against SELL from each model's continuous score. Foundation models are zero-shot on each
+  position's share history. Best value in each column in bold.}
+  \label{tab:rq1}
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Model & Accuracy & Macro-F1 & Fund acc. & AUC \\
+    \midrule
+    Majority class (per fund) & 56.4\% & 0.29 & 56.7\% & -- \\
+    Recent majority (8 quarters) & 50.7\% & 0.42 & 52.9\% & -- \\
+    Repeat last action & 44.1\% & 0.39 & 45.9\% & -- \\
+    Rule: fund's net direction at $t-1$ & 51.1\% & 0.34 & 49.7\% & -- \\
+    Logistic regression & 61.1\% & 0.45 & 58.8\% & 0.64 \\
+    LSTM, 8-quarter sequences & 62.2\% & 0.46 & \textbf{61.3\%} & 0.65 \\
+    LightGBM & \textbf{62.5\%} & \textbf{0.48} & 60.8\% & \textbf{0.66} \\
+    \midrule
+    Chronos-2, zero-shot & 58.3\% & 0.30 & 56.5\% & 0.57 \\
+    \quad + returns, EPU covariates & 58.6\% & 0.31 & 56.5\% & -- \\
+    TimesFM 2.5, zero-shot & 57.7\% & 0.30 & 54.7\% & 0.58 \\
+    Chronos, finance-trained & 56.6\% & 0.25 & 56.7\% & 0.52 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

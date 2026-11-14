@@ -1,0 +1,27 @@
+[project]
+name = "hedge-fund-fm"
+version = "0.1.0"
+description = "Predicting hedge fund trades with foundation models"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pandas>=2.2",
+    "pyarrow>=17",
+    "requests>=2.32",
+    "beautifulsoup4>=4.12",
+    "tqdm>=4.66",
+    "yfinance>=0.2.50",
+    "lightgbm>=4.7.0",
+    "scikit-learn>=1.9.1",
+    "openpyxl>=3.1.5",
+    "torch>=2.15.0",
+    "transformers>=5.22.2",
+    "chronos-forecasting>=2.0",
+    "matplotlib>=3.11.2",
+    "statsmodels>=0.14",
+    "timesfm>=3.0",
+    "pypdf",
+]
+
+[dependency-groups]
+# added as each phase needs them, to keep the first install small
+models = ["lightgbm>=4.5", "scikit-learn>=1.5", "statsmodels>=0.14"]

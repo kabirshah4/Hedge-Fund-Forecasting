@@ -1,0 +1,44 @@
+# data is large and re-downloadable: never commit it
+data/raw/*
+data/processed/*
+data/processed_adv/*
+!data/**/.gitkeep
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+
+# packaged extension build
+tools/checklist-extension/*.vsix
+
+# LLM job files (regenerate with src/llm_news.py --export)
+tools/llm_runner/jobs.jsonl
+tools/llm_runner/results.jsonl
+
+# run logs contain local paths
+*.log
+.impeccable/
+
+# all processed sample data (large, rebuildable)
+data/processed_*/*
+# local clone of the GitHub repo
+Hedge Fund Forecasting/
+# personal planning files (not part of the research)
+docs/phases.txt
+docs/checklist.json
+docs/mentors.md
+docs/process/phase1-learning-check.md
+tools/checklist-extension/
+# personal study video
+video/
+# LaTeX build outputs
+paper/*.pdf
+!paper/main.pdf
+paper/*.synctex.gz
+docs/plan.md

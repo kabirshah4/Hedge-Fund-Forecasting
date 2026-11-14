@@ -1,0 +1,78 @@
+\section{Data}
+\label{sec:data}
+
+\paragraph{Holdings.} We use the SEC's Form 13F data sets: 54 files, one per
+release (quarterly through 2023, then three-month windows), that together
+contain every 13F report filed from July 2013 to August 2026 (holdings for
+2013Q2 to 2026Q2). Institutional managers with investment
+discretion over at least \$100 million in Section 13(f) securities (mainly
+U.S.-listed stocks and options) must report their long positions in these
+securities within 45 days of each quarter's end. A report covers the whole
+management firm, not a single fund; for brevity we call each 13F filer a
+``fund'', and each N-PORT series is a single fund. We keep common shares only (no options or
+bonds), take the latest restatement of each report plus amendments that add
+positions, and convert values to dollars (the SEC switched from thousands to
+dollars in January 2023).
+
+\paragraph{Samples.} No free list identifies which 13F filers are hedge
+funds, so we build several samples (Table~\ref{tab:samples}).
+\emph{Hand-picked hedge funds:} 49 well-known managers spanning
+multi-strategy, quantitative, long/short equity, activist, event-driven and
+macro styles (listed in the code repository), selected by written rules: we use the
+entity that actually reports holdings (related entities often file notices
+only), join histories across changes of legal entity, and exclude market
+makers, family offices and mostly long-only managers.
+\emph{Form ADV hedge funds:} because a list chosen in 2026 risks favoring
+survivors, we also select funds by rule from SEC Form ADV filings made between
+July 2012 and June 2013, before our sample begins. We sum the gross asset value
+of the private funds each registered adviser classifies as hedge funds
+(excluding feeder funds and funds of funds) and keep advisers whose hedge funds
+hold at least \$1 billion, at least half of their private-fund assets and at
+least a quarter of their regulatory assets; link each to its 13F filings by
+the CIK it reports or by exact legal name; require at least 10 holdings in
+June 2013; and keep the 100 largest, of which 99 hold stocks in our universe.
+The list follows each adviser's 2013 filer and so does not follow later
+reorganizations (e.g.\ SAC Capital into Point72). \emph{Long-only managers:} with the same timing and linking, we
+select advisers that draw more than 75\% of their assets from registered
+investment companies (mutual funds), have essentially no hedge funds (under
+5\% of regulatory assets), manage at least \$1 billion, and are active rather
+than index-like: active share~\cite{cremers2009active} of at least 0.6 against
+the value-weighted stock universe in June 2013. This excludes, for example,
+Vanguard and the firm-wide filing of Fidelity, whose aggregated holdings are
+close to the market. Three sponsors of sector and leveraged ETFs also pass;
+no ETF flag exists before 2018 (Form N-CEN), so we keep the rule and report
+results without them. Like hedge fund filings, these are firm-level reports, so the
+comparison holds the level of aggregation fixed. \emph{Individual mutual
+funds:} to anchor the comparison with~\cite{cohen2026mimicking}, who study
+individual funds, we use the SEC's Form N-PORT data sets, which report each
+registered fund's holdings and are available from late 2019. As of December
+2019 we keep active U.S.\ equity funds (at least 20 universe stocks making up
+at least 60\% of net assets, active share at least 0.6, not ETFs) and take the
+300 largest by net assets. To isolate aggregation, we also add these funds up
+to their registrant (the fund trust), for registrants with at least two
+selected funds; a family-quarter exists only if all its funds reported.
+
+
+\paragraph{Stock universe.} Each quarter we take the 500 largest stocks by
+total institutional holdings across all 13F filers, measured as each filer's
+shares times the stock's median reported price per share, excluding filers
+whose own implied price is more than five times off (a unit error), debt
+securities, ETFs, funds and ADRs (on average \univtype{} of the 500 largest
+holdings each quarter), and stocks held by fewer than 100 filers (another
+\univholders).
+Built from SEC data alone, the universe retains companies that were later
+acquired or delisted; using the S\&P~500 instead would lose 10--28\% of early
+members to ticker changes that free data cannot resolve. Membership for
+quarter $t$ is fixed at the end of quarter $t-1$.
+
+\paragraph{Market data and news.} We map CUSIPs to tickers with OpenFIGI
+(including a share-class fallback for securities whose only listings are
+foreign) and obtain daily dividend- and split-adjusted prices and split
+histories from Yahoo Finance for 3,104 tickers, covering prices through 30
+June 2026 (30 October 2026 for the return tests), downloaded in November 2026;
+Yahoo's history can change, so the code repository archives the panel. Company-tagged news headlines
+come from FNSPID~\cite{dong2024fnspid} (1.4 million headlines for 676 universe
+stocks, 2013--2023), scored with FinBERT~\cite{araci2019finbert}
+(\texttt{ProsusAI/finbert}). Policy uncertainty is the monthly index
+of~\cite{baker2016epu}; factor returns are the Fama--French five factors and
+momentum from Kenneth French's data library.

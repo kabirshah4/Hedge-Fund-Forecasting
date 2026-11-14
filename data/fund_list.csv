@@ -1,0 +1,58 @@
+fund,style,ciks,include,note
+AKO Capital,long/short equity,0001376879,yes,files from 2017 only
+Altimeter Capital,growth / crossover,0001541617,yes,
+Appaloosa,event-driven / credit,0001006438;0001656456,yes,new SEC ID from 2016; join the two
+AQR Capital Management,quant,0001167557,yes,"kept: a major quant hedge fund manager, though it also runs long-only funds (a stated limitation)"
+Balyasny Asset Management,multi-strategy,0001218710,yes,
+Baupost Group,value / event-driven,0001061768,yes,
+BlueCrest Capital Management,macro / multi-strategy,0001363542;0001610880,no,"family office: manages only its own money, no outside investors"
+Bridgewater Associates,macro,0001350694,yes,
+Candlestick Capital,long/short equity,0001789779,yes,files from 2020 only
+Canyon Capital Advisors,event-driven / credit,0001074034,yes,
+Citadel Advisors,multi-strategy,0001423053,yes,
+Coatue Management,tiger cub / growth,0001135730,yes,
+D. E. Shaw,quant / multi-strategy,0001009207,yes,the one D. E. Shaw entity that reports holdings; the rest file notices
+D1 Capital Partners,long/short equity,0001747057,yes,files from 2019 only
+Dorsal Capital,long/short equity,0001547007,yes,
+Dragoneer Investment Group,growth / crossover,0001602189,yes,
+Duquesne Family Office,macro,0001536411,no,"family office: manages only its own money, no outside investors"
+Elliott Management,activist / event-driven,0001048445;0001791786,yes,new SEC ID from 2020; join the two
+Eminence Capital,long/short equity,0001107310,yes,
+ExodusPoint,multi-strategy,0001736225,yes,files from 2019 only
+Glenview Capital,long/short equity,0001138995,yes,
+Greenlight Capital,long/short equity / value,0001079114,yes,stops after 2023 under this ID
+Holocene Advisors,long/short equity,0001700574,yes,files from 2018 only
+Icahn (Carl Icahn),activist,0000921669,yes,holdings are reported under Carl Icahn's own filing; Icahn Capital files notices
+JANA Partners,activist,0001159159;0001998597,yes,new SEC ID from 2024; join the two
+Jericho Capital,long/short equity,0001525234,yes,
+Lansdowne Partners,long/short equity,0001608485,yes,files from 2014 only
+Light Street Capital,tiger cub / growth,0001569049,yes,
+Lone Pine Capital,tiger cub,0001061165,yes,
+Man Group,quant / multi-strategy,0001637460,no,"before 2018 it filed through separate subsidiaries (GLG, AHL, Man Investments), so no single history"
+Marshall Wace,long/short equity / quant,0001318757,yes,
+Maverick Capital,tiger cub,0000934639,yes,
+Millennium Management,multi-strategy,0001273087,yes,
+Paulson & Co.,event-driven / merger arbitrage,0001035674,yes,
+Pershing Square,activist,0001336528,yes,
+Point72 Asset Management,multi-strategy,0001603466,yes,from 2014; before that it was SAC Capital
+Renaissance Technologies,quant,0001037389,yes,
+Samlyn Capital,long/short equity,0001421097,yes,
+Sands Capital Management,growth (mostly long-only),0001020066,no,"mostly a long-only manager, not a hedge fund"
+Schonfeld,multi-strategy,0001425994;0001665241,yes,new SEC ID from 2016; join the two
+Scion Asset Management,value / macro,0001649339,yes,files 2016-2025 only
+SIR Capital Management,long/short equity,0001434997,yes,
+Slate Path Capital,long/short equity,0001559706,yes,
+Soros Fund Management,macro / multi-strategy,0001029160,no,"family office: manages only its own money, no outside investors"
+Starboard Value,activist,0001517137,yes,
+Susquehanna,market maker,0000918950,no,"a trading firm / market maker, not a hedge fund"
+TCI Fund Management,activist / long-term,0001647251,yes,files from 2015 only
+Third Point,activist / event-driven,0001040273,yes,
+Tiger Global Management,tiger cub / growth,0001167483,yes,
+Touradji Capital,commodities,0001336657,no,stopped filing in 2014
+Trian Fund Management,activist,0001345471,yes,
+Two Sigma Investments,quant,0001179392,yes,"renamed LLC -> LP in 2016, same ID"
+ValueAct Capital,activist,0001418814,yes,holdings are reported by ValueAct Holdings; ValueAct Capital Management files notices
+Viking Global Investors,tiger cub,0001103804,yes,
+Whale Rock Capital,long/short equity (tech),0001387322,yes,
+Winton Capital Management,quant / trend,0001456098;0001612063,yes,entity change: Winton Capital Management (to 2014Q1) then Winton Capital Group / Winton Group (2014Q2 on); join the two
+Berkshire Hathaway,control (not a hedge fund),0001067983,control,"kept as a comparison, not counted as a hedge fund"

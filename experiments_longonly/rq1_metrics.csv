@@ -1,0 +1,2 @@
+funds,mean_fund_acc_model,mean_fund_acc_base,error_reduction_of_means,error_reduction_median_fund,logloss_skill_mean_fund,logloss_skill_median_fund,logloss_skill_pooled,auc_ovr_macro,auc_buy_sell,spearman_gain_vs_rows
+39,0.5592230920390014,0.4973510417621878,0.12309196957997248,0.03861869360422224,0.0587270910861627,0.07361084351625746,0.067865184844219,0.7083916074800717,0.6436418880633813,0.2799374971715766
