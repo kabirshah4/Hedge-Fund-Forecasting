@@ -93,3 +93,40 @@ data-processing and analysis code, generate the figures and tables, and draft th
 text of this paper. The author designed the study, directed every analysis,
 checked all results and references against their sources, and takes full
 responsibility for the content."
+
+## 2026-11-13: Fifth blind review (score 3/5) and fixes
+- Diebold-Mariano tests (src/dm_test.py -> experiments/dm_tests.csv): LightGBM beats the
+  per-fund baseline in 18/18 test quarters (hand-picked, DM t = 7.4) and in every sample
+  (t >= 5.3); log-loss likewise. Chronos-2 (t = -2.3) and TimesFM (t = -5.6) are significantly
+  WORSE than the baseline; finance-trained Chronos not different (p = .11). Citations
+  Diebold & Mariano 1995 and Harvey, Leybourne & Newbold 1997 verified on Crossref.
+- "98% at every strength" is real (means 97.8/97.8/97.6; same random funds across strengths),
+  but those rules were worth ~+22 points. New weak-signal test (src/weak_injection.py):
+  rules worth +1.2 to +8.5 points raise the model's gain on injected funds above other funds
+  in 12/12 draws. Abstract now says "planted signals as small as the real effect".
+- Writing: attributed the 71% to the study; "says nothing" -> "gives no evidence"; abstract's
+  last sentence conditioned on public data and standard features; withdrew "not specific to
+  firm-level filings or recent years"; "surprise" = against usual direction stated in abstract;
+  error-reduction no longer called class-mix independent; intro TSFM citation fixed (Noguer
+  instead of the LLM review); duplicate "first" claim removed from Related Work.
+- Cut for space (reviewer: too many secondary numbers): per-fund HOLD shares, by-style RQ1
+  ranking, by-style RQ3 alpha, peer-feature ablation (also removed from Method).
+- Open, needs Kabir's decision: firm-characteristic features (W1), large-trade labels (W4),
+  yearly retraining (W6), foundation-model framing in title (W3).
+
+## 2026-11-13 (night): reviewer W1, W4, W6 experiments (Kabir asleep, approved "a" then "continue")
+- W1 firm characteristics (src/firm_chars.py, src/rq1_firmchars.py): 15 features (9 from SEC XBRL
+  frames, used only if the period ended >= 120 days before the cutoff; 6 from prices). CIKs matched
+  for 91% of universe stock-quarters (ticker, then exact name so delisted firms are covered).
+  Extra gain at most +0.47 points (hand-picked, CI [-0.01, 1.00], DM p = .03, Holm across 5
+  samples .16); others +0.02 to +0.32 or negative; max errors fixed 12.6%. Same on positions with
+  fundamentals only. Abstract/discussion now say adding these barely helps.
+- W4 large trades (src/big_trades.py): +-25% band gain +2.4 [0.3, 4.4] hand-picked (5% of errors),
+  -1.7 to +4.3 elsewhere; full exits AUC 0.76-0.82 vs 0.65-0.75 from fund exit rate alone.
+- W6 yearly expanding-window retraining (src/yearly_retrain.py): accuracy +0.7 points vs static
+  (DM p = .007) but baseline also rises; gain +3.5 [1.6, 5.7], 8% of errors (4-13% across samples).
+- Space: cut trade-quarter RQ3 window (text + method), news-expectation sentence, tuning sentence
+  (still in Table 2), Zhang & Zhang review sentence, LSTM optimizer details (in code), per-fund
+  capacity details, misplaced N-PORT clause in the Figure 1 paragraph. Both PDFs 8 pages.
+- LLM runner: watcher (PID-based) restarts run_jobs.py without a stop time after the 7 AM stop,
+  at Kabir's request ("keep it running after 7am").

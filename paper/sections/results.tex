@@ -6,19 +6,22 @@
 \subsection{RQ1: How predictable are hedge funds' trades?}
 
 Hedge fund trades are only modestly predictable (Table~\ref{tab:rq1}).
-LightGBM raises mean per-fund accuracy from \baseM\% for each fund's
-majority action to \lgbM\%, a gain of \gainM{} points (95\% CI \gainloM{} to
-\gainhiM{} when whole funds are resampled, \twowayloM{} to \twowayhiM{} when
-funds and quarters are resampled jointly). The choice of learner matters little: logistic regression
-reaches \logitM\%, and an LSTM over each position's last eight quarters, the
-model family of~\cite{cohen2026mimicking}, reaches \lstmM\%, slightly above
-LightGBM in per-fund accuracy but below it on the other three metrics, so we
-report LightGBM; conclusions are the same with the LSTM. Simple rules do
-worse than the baseline, including each fund's majority action over its last
-eight quarters (\recentM\%): hedge funds' overall direction changes from
-quarter to quarter. The model relies mostly on fund identity, the position's
-weight and rank, and recent fund activity; past returns and peers' trades
-contribute little, so what is predictable is habit rather than herding.
+LightGBM raises mean per-fund accuracy from \baseM\% for each fund's majority
+action to \lgbM\%, a gain of \gainM{} points (95\% CI \gainloM{} to
+\gainhiM{} when whole funds are resampled, and \twowayloM{} to \twowayhiM{}
+when funds and quarters are resampled together). The gain is not luck:
+it appears in all \dmposM{} test quarters (Diebold--Mariano $t = \dmtM$, $p <
+0.001$; $t \geq \dmtminall$ in the other samples). The choice of model does not appear to
+matter much. Logistic regression reaches \logitM\%, and an LSTM over each
+position's last eight quarters, the model family of~\cite{cohen2026mimicking},
+reaches \lstmM\%. The LSTM is slightly above LightGBM in per-fund accuracy but
+below it on the other three metrics, so we report LightGBM; the conclusions
+are the same with the LSTM. Simple rules are not able to beat the baseline, including
+each fund's majority action over its last eight quarters (\recentM\%), because
+hedge funds' overall direction changes from quarter to quarter. The model
+relies mostly on fund identity, the position's weight and rank, and recent
+fund activity, while past returns and peers' trades add little: what is
+predictable is habit, not herding.
 
 \begin{figure}[t]
   \centering
@@ -33,23 +36,19 @@ contribute little, so what is predictable is habit rather than herding.
   \label{fig:rq1}
 \end{figure}
 
-The average gain hides how it is distributed (Figure~\ref{fig:rq1}); some
-mutual funds, trained on only six quarters, even fall below their baseline. For the
-median hedge fund the model adds \medgainM{} points, and only \naboveM{} of
-\activeM{} funds gain more than one point. The gain comes from the
-\nlowbaseM{} funds without a dominant action (baseline below 50\%), where it
-is \gainlowbaseM{} points; for the rest it is \gainrestM{}. This is not an
-artefact of large funds dominating the pooled training data: training with
+The average gain hides how it is spread across funds (Figure~\ref{fig:rq1}). For the median hedge fund the model adds \medgainM{} points, and
+only \naboveM{} of \activeM{} funds gain more than one point. The gain comes
+from the \nlowbaseM{} funds without a dominant action (baseline below 50\%),
+where it is \gainlowbaseM{} points; for the rest it is \gainrestM{}. This is
+not because large funds dominate the pooled training data: training with
 equal total weight per fund gives a mean gain of \fundwtgainM{} and a median
-of \fundwtmedM. Because hedge fund actions split almost evenly between BUY
-and SELL, accuracy gains are hard to compare across data sets, so we also
-report measures that do not depend on the class mix: the model fixes
+of \fundwtmedM. Because hedge fund actions split almost evenly between BUY and
+SELL, we also report measures that do not depend on the class mix. The model fixes
 \errredM\% of the baseline's errors, lowers log-loss by \llskillM\% relative
 to each fund's training class frequencies, and ranks a random BUY above a
-random SELL with probability \aucbsM{}. Pooled accuracy (\lgbpooledM\%)
-exceeds mean per-fund accuracy because multi-strategy and quantitative funds
-supply \multiquantshareM\% of test positions and are somewhat more
-predictable; we therefore report per-fund averages throughout.
+random SELL with probability \aucbsM{}. Pooled accuracy (\lgbpooledM\%) is
+higher because the somewhat more predictable multi-strategy and quantitative
+funds supply \multiquantshareM\% of test positions.
 
 These conclusions are robust (Table~\ref{tab:samples}). Under the rolling,
 per-fund protocol of~\cite{cohen2026mimicking}, models trained separately for
@@ -60,211 +59,209 @@ quarters (a median of \medtrainM{} training cases) are too few and too
 irregular to learn from; a pooled model retrained on each block's 20 quarters
 gains \protpoolgainM. Dropping the rare HOLD class (BUY vs.\ SELL, \bsgainM{}
 points, AUC \bsaucM{}) or widening the HOLD band to $\pm5\%$ (\hbgainM{})
-leaves small gains. HOLD is \holdM\% of all hedge fund labels and
-\holdpooledtestM\% in the test period, but is concentrated in a few
-concentrated activist portfolios (e.g.\ \holdelliott\% of Elliott's,
-\holdicahn\% of Icahn's and \holdpershing\% of Pershing Square's test
-positions), which is why dropping it moves the per-fund baseline noticeably.
-Removing the peer features, whose peer set differs by sample, changes the
-gain to \nopeergainM{} points; excluding the multi-strategy and quantitative
-firms gives \exmqgain{} [\exmqlo, \exmqhi], and weighting each fund's positions
-by their dollar value gives \dwgain{} [\dwlo, \dwhi]. By style,
-multi-strategy (\stylemultigain{} points), activist (\styleactgain{}) and
-quantitative funds (\stylequantgain{}) are the most predictable relative to
-their baselines, and long/short equity (\stylelsgain{}) and macro/value
-funds (\stylemacrogain{}) the least.
+still leaves small gains. Large trades are no easier: with a
+$\pm25\%$ band the gain is \bigM{} points [\bigloM, \bighiM] (\bigerrM\% of
+errors) for the hand-picked funds and \bigmin{} to \bigmax{} elsewhere, and
+full exits are ranked with AUC \exitaucmin--\exitaucmax{} in every sample,
+against \exitbasemin--\exitbasemax{} from each fund's exit rate alone.
+Retraining every year on an expanding window raises accuracy by \yrdiffM{}
+points (DM $p = \yrpM$), but the baseline rises too: the gain is \yrgainM{}
+[\yrgainloM, \yrgainhiM] (\yrerrM\% of errors; \yrerrmin--\yrerrmax\% across
+samples). Excluding the multi-strategy and quantitative
+firms gives \exmqgain{} [\exmqlo, \exmqhi], and weighting each fund's
+positions by their dollar value gives \dwgain{} [\dwlo, \dwhi]. 
 
 \paragraph{Can the pipeline find predictability where it exists?} A negative
-result is informative only if the method could have found a positive one
-(Table~\ref{tab:controls}). When a random tenth or quarter of the funds is
-made to follow a simple rule on a visible feature, the pipeline recovers the
-attainable gain for those funds: accuracy rises from \injbaseten\% to
+result only means something if the method could have found a positive one
+(Table~\ref{tab:controls}). We make a random tenth or quarter of the funds
+follow a simple rule on a visible feature, and the pipeline recovers the
+attainable gain for those funds. Accuracy rises from \injbaseten\% to
 \injmodelten\% for an exact rule, and from \injbasenoisy\% to
 \injmodelnoisy\% (ceiling \injrulenoisy\%) when the rule holds for 80\% of
-their positions. With weaker planted signals, where the rule sets only 55\%,
-60\% or 70\% of a fund's labels, it recovers \grrecff\%, \grrecsixty\% and
-\grrecseventy\% of the attainable gain, while the other funds are unaffected.
-More history does not unlock predictability: training on the last 6, 12 or
-20 quarters before 2021 instead of all \lcallquarters{} gives gains of
+their positions. When the rule sets 55, 60 or 70\% of a fund's labels, it
+recovers about \grrecsixty\% of the attainable gain, and the other funds are
+unaffected.
+Even rules worth only \weakattlo--\weakatthi{} points over the baseline
+(5--30\% of labels) raise the model's gain on those funds above its gain on
+the others in all \weakdraws{} draws (\weakgainlo--\weakgainhi{} against
+\weakotherlo--\weakotherhi{} points).
+Moreover, more history does not provide much benefit. Training on the last 6, 12 or 20
+quarters before 2021 instead of all \lcallquarters{} gives gains of
 \lcsixM{}, \lctwelveM{} and \lctwentyM{} points for the hand-picked hedge
-funds (\lcallM{} with all quarters), \lcsixA{}, \lctwelveA{} and \lctwentyA{} for the
-Form ADV funds and \lcsixL{}, \lctwelveL{} and \lctwentyL{} for long-only
-managers. A modest tuning
-budget leaves the gain unchanged (\tunedM{} points), and testing on an
-earlier period, 2017--2019, does not raise it (\earlyM{} and \earlyA{} points
-for the hedge funds, \earlyL{} for long-only managers). The pipeline detects
-planted signals of moderate strength; real hedge fund trades carry little
-signal of this kind.
+funds (\lcallM{} with all quarters), \lcsixA{}, \lctwelveA{} and \lctwentyA{}
+for the Form ADV funds, and \lcsixL{}, \lctwelveL{} and \lctwentyL{} for
+long-only managers. Testing on an earlier period, 2017--2019, does not
+raise it (\earlyM{} and \earlyA{} points for the hedge funds, \earlyL{} for
+long-only managers). The pipeline is able to detect planted signals as small as the
+real effect; real hedge fund trades carry little signal of this kind.
 
 \input{tables/controls}
 
 \paragraph{Comparison with long-only managers and individual mutual funds.}
-The identical pipeline on the other samples (Table~\ref{tab:samples}) shows
-that hedge funds are not unusual. Active long-only managers hold far more
-HOLD positions (\holdL\% of labels against \holdM\%), so repeating the last
-action works for them, but the model's gain over the majority baseline is
-similar: \gainL{} points [\gainloL, \gainhiL] and \errredL\% of errors fixed,
-against \gainM{} [\gainloM, \gainhiM] and \errredM\% for hedge funds. The
-long-only advantage over the hand-picked and Form ADV hedge funds, \diffgainM{}
+The same pipeline on the other samples (Table~\ref{tab:samples}) shows that
+hedge funds do not appear to be particularly unusual. Active long-only managers hold far more HOLD
+positions (\holdL\% of labels against \holdM\%), so repeating the last action
+works for them. But the model's gain over the majority baseline is similar:
+\gainL{} points [\gainloL, \gainhiL] and \errredL\% of errors fixed, against
+\gainM{} [\gainloM, \gainhiM] and \errredM\% for hedge funds. The long-only
+advantage over the hand-picked and Form ADV hedge funds, \diffgainM{}
 [\diffgainloM, \diffgainhiM] and \diffgainA{} [\diffgainloA, \diffgainhiA]
-points, is not significant (nor without the three ETF sponsors). This is not
-equivalence: we rule out a long-only advantage above about \diffgainhiM{}
-points, not a smaller one. The decisive comparison
-uses individual mutual funds, the unit of~\cite{cohen2026mimicking}. On
-\activeN{} active U.S.\ equity mutual funds from N-PORT the model gains only
-\gainN{} points [\gainloN, \gainhiN] and fixes \errredN\% of errors; adding the
-same funds up to their families gives \gainP{} [\gainloP, \gainhiP] and
-\errredP\%, not significantly different from the funds that belong to these
-families (\diffgainNP{} [\diffgainloNP, \diffgainhiNP]). Because N-PORT starts in late 2019, these models train on six
-quarters; retraining every 13F sample on that same window
-(Table~\ref{tab:samples}, ``same training window'' rows) gives a consistent
-picture, with gains of \shortgainM{} [\shortgainloM, \shortgainhiM] for the
-hand-picked hedge funds (no longer significant), \shortgainA{} for the Form
-ADV hedge funds and \shortgainL{} for long-only managers, fixing between
+points, is not significant (nor without the three ETF sponsors). This does not
+prove they are equal: we rule out a long-only advantage above about
+\diffgainhiM{} points, not a smaller one. The key comparison uses individual
+mutual funds, the unit of~\cite{cohen2026mimicking}. On \activeN{} active U.S.\
+equity mutual funds from N-PORT, the model gains only \gainN{} points
+[\gainloN, \gainhiN] and fixes \errredN\% of errors. Adding the same funds up
+to their families gives \gainP{} [\gainloP, \gainhiP] and \errredP\%, not
+significantly different from the funds that belong to these families
+(\diffgainNP{} [\diffgainloNP, \diffgainhiNP]). Because N-PORT starts in late
+2019, these models train on six quarters. Retraining every 13F sample on that
+same window (Table~\ref{tab:samples}, ``same training window'' rows) gives a
+consistent picture: gains of \shortgainM{} [\shortgainloM, \shortgainhiM] for
+the hand-picked hedge funds (no longer significant), \shortgainA{} for the
+Form ADV hedge funds and \shortgainL{} for long-only managers, fixing between
 \shorterrmin{} and \shorterrmax\% of errors across all samples. In our
-pipeline no group comes near the 40\% that~\cite{cohen2026mimicking} fix for
-mutual funds over 1990--2023, adding funds together does not significantly
-reduce predictability, and the earlier 2017--2019 period is no more
-predictable (Table~\ref{tab:controls}). The gap with that study is therefore
-not specific to hedge funds, to firm-level filings or to recent years; it
-most plausibly reflects differences in data (fund-level Morningstar holdings
-with a broad set of firm characteristics against public filings and our
-features) and in per-fund history length.
+pipeline no group comes close to the 40\% of errors
+that~\cite{cohen2026mimicking} fix for mutual funds over 1990--2023, adding
+funds together does not significantly reduce predictability, and the earlier
+2017--2019 period is no more predictable (Table~\ref{tab:controls}). The gap
+with that study is therefore not specific to hedge funds. Our tests of
+firm-level filings and of an earlier period use shorter training histories,
+so they are less conclusive. Richer stock features do not close the gap: adding \firmn{} firm
+characteristics raises the gain by at most \firmextramax{} points in any
+sample (hand-picked: \firmextraM{} [\firmextraloM, \firmextrahiM], DM $p =
+\firmdmpM$, Holm across samples \firmholmM), and no group fixes more than
+\firmerrmax\% of errors. The gap most likely reflects the holdings data
+(fund-level Morningstar holdings against public filings) and how much history
+each fund has.
 
 \input{tables/samples}
 
 \subsection{What drives the low predictability?}
 
-\emph{Fund-wide direction versus stock selection.} Much of a fund's
-quarterly behavior could be a fund-wide component: flows, changes in gross
-exposure, de-risking. An oracle that is told each fund's actual net direction
-in quarter $t$ and predicts it for every position gains only \oraclegainM{}
-points, less than the model; adding the fund's actual quarter-$t$ buy share
-to LightGBM as a feature raises the gain to \lgboraclegainM{} points
-(\lgboracleM\% accuracy), still far below the mutual-fund benchmark
-(Table~\ref{tab:samples}; \lgboraclegainA{}, \lgboraclegainL{},
-\lgboraclegainN{} and \lgboraclegainP{} points in the other four samples). Even knowing the fund's overall direction, which of its stocks it
-buys or sells remains largely unpredictable.
+\emph{Fund-wide direction versus stock selection.} Much of a fund's quarterly
+behavior could be fund-wide: flows, changes in gross exposure, de-risking. An
+oracle that is told each fund's actual net direction in quarter $t$ and
+predicts it for every position gains only \oraclegainM{} points, less than the
+model. Adding the fund's actual quarter-$t$ buy share to LightGBM as a feature
+raises the gain to \lgboraclegainM{} points (\lgboracleM\% accuracy), still
+far below the mutual-fund benchmark (Table~\ref{tab:samples};
+\lgboraclegainA{}, \lgboraclegainL{}, \lgboraclegainN{} and
+\lgboraclegainP{} points in the other four samples). Even when the fund's
+overall direction is known, which of its stocks it buys or sells remains
+largely unpredictable.
 
-\emph{Private information and aggregation.} If hedge funds traded on
-private information, their trades should be least predictable in smaller,
-more opaque stocks, more so than long-only managers'. The gain in the
-smallest third of the universe relative to the largest is \smlM{} points
-[\smlloM, \smlhiM] for the hand-picked hedge funds but \smlA{} for the Form ADV
-funds and \smlL{} for long-only managers; the hedge-fund minus long-only
-difference is \smldiffM{} [\smldiffloM, \smldiffhiM]. If netting across a firm's many
+\emph{Private information and aggregation.} If hedge funds traded on private
+information, their trades should be least predictable in smaller, more opaque
+stocks, and more so than long-only managers' trades. The gain in the smallest
+third of the universe relative to the largest is \smlM{} points [\smlloM,
+\smlhiM] for the hand-picked hedge funds, but \smlA{} for the Form ADV funds
+and \smlL{} for long-only managers; the hedge-fund minus long-only difference
+is \smldiffM{} [\smldiffloM, \smldiffhiM]. If netting across a firm's many
 portfolios blurred predictability, funds with more positions would be less
-predictable; instead the rank correlation between a fund's gain and its
+predictable. Instead, the rank correlation between a fund's gain and its
 number of holdings is \rhoholdingsM{} [\rhoholdingsloM, \rhoholdingshiM]
-(\rhoholdingsA{} Form ADV, \rhoholdingsL{} long-only). Neither simple mechanism singles out hedge funds.
+(\rhoholdingsA{} Form ADV, \rhoholdingsL{} long-only). Neither simple
+explanation singles out hedge funds.
 
 \subsection{RQ2: Do foundation models and news help?}
 
 Used zero-shot, none of the three foundation models beats the majority
-baseline in mean per-fund accuracy (Table~\ref{tab:rq1}): Chronos-2 reaches
+baseline in mean per-fund accuracy (Table~\ref{tab:rq1}). Chronos-2 reaches
 \chronosM\% (\chronosDM\% with return and policy-uncertainty covariates),
-TimesFM~2.5 \timesfmM\% and the Chronos model pre-trained only on U.S.\
-stock returns up to 2020 \fintextM\%, against \baseM\% for the baseline.
-In pooled accuracy, which favors large funds, Chronos-2 does beat the
-majority baseline (\chronospooledM\% against \basepooledM\%). Their tuned cut-offs
-collapse to a single threshold, so they never predict HOLD; judged by ranking instead, which does not depend on cut-offs, their
-scores carry some information (BUY-vs-SELL AUC \aucchronosM, \auctimesfmM{}
-and \aucfintextM) but less than LightGBM (\auclgbM). Position histories are
-short (a median of \medhistM{} quarters), jumpy and driven by decisions
-rather than dynamics, unlike the series these models learn
-from~\cite{rahimikia2025tsfm}; for comparison, the LSTM in
-Table~\ref{tab:rq1}, a small model trained on the holdings sequences
-themselves, does better than all three.
+TimesFM~2.5 \timesfmM\%, and the Chronos model pre-trained only on U.S.\
+stock returns up to 2020 \fintextM\%, against \baseM\% for the baseline. On a
+pooled accuracy basis, which favors large funds, Chronos-2 is able to beat the majority
+baseline (\chronospooledM\% against \basepooledM\%). Diebold--Mariano tests find Chronos-2 and TimesFM significantly worse than the
+baseline ($t = \dmtchronos$ and $\dmttimesfm$) and the finance-trained Chronos
+not different from it ($p = \dmpfintext$). Their tuned cut-offs collapse to a
+single threshold, so they never predict HOLD. Judged by ranking
+instead, which does not depend on cut-offs, their scores carry some
+information (BUY-vs-SELL AUC \aucchronosM, \auctimesfmM{} and \aucfintextM),
+but less than LightGBM (\auclgbM). Position histories are short (a median of
+\medhistM{} quarters), jumpy and driven by decisions rather than dynamics,
+unlike the series these models learn from~\cite{rahimikia2025tsfm}. By
+comparison, the LSTM in Table~\ref{tab:rq1}, a small model trained on the
+holdings sequences themselves, does better than all three.
 
 \input{tables/rq2}
 
-As inputs they help little (Table~\ref{tab:rq2}; the finance-trained
-Chronos covers only the validation and test years and cannot be used as a
+As extra inputs they help little (Table~\ref{tab:rq2}; the finance-trained
+Chronos covers only the validation and test years, so it cannot be used as a
 training feature). Adding the Chronos-2 forecast to LightGBM raises accuracy
-by \rqtwochronos{} points [\rqtwochronoslo, \rqtwochronoshi], the only
+by \rqtwochronos{} points [\rqtwochronoslo, \rqtwochronoshi]. This is the only
 interval in Table~\ref{tab:rq2} that excludes zero (unadjusted for
 multiplicity), and the gain disappears in the 2022--2023 subperiod; TimesFM
-adds \rqtwotimesfm{} [\rqtwotimesfmlo, \rqtwotimesfmhi]. News does not help, whether from the previous quarter (a
-forecast), from the same quarter (a nowcast made before the filing is
-public), or only from the last 15 days before quarter-end, which tests
-whether averaging over a quarter washes out short-lived news. We expected
-news to matter through its interaction with fund identity (styles react
-differently to the same headline), which LightGBM can represent. No interval
-reaches beyond \rqtwomaxhi{} points, small next to the model's own gain
-over the majority baseline in the same 2022--2023 window (\newswindowgain{}
-points [\newswindowlo, \newswindowhi]).
+adds \rqtwotimesfm{} [\rqtwotimesfmlo, \rqtwotimesfmhi]. News does not help,
+whether from the previous quarter (a forecast), from the same quarter (a
+nowcast made before the filing is public), or only from the last 15 days
+before quarter-end, which tests whether averaging over a quarter washes out
+short-lived news. No interval reaches beyond \rqtwomaxhi{} points, which
+is small next to the model's own gain over the majority baseline in the same
+2022--2023 window (\newswindowgain{} points [\newswindowlo, \newswindowhi]).
 \todo{LLM reading of news and the memorization check: after the overnight runs}
 
 \subsection{RQ3: Do unpredicted trades earn more?}
 
 \input{tables/rq3main}
 
-Our primary test uses the window in which only the fund knew its trades:
-from the end of quarter $t$ to the day its 13F for $t$ became public (a
-median of \filinglagmedian{} days; only \filedthirtyone\% of hedge fund
-reports appear within a month), over \rqthreequartersM{} formation quarters
+Our primary test uses the window in which only the fund knew its trades: from
+the end of quarter $t$ to the day its 13F for $t$ became public (a median of
+\filinglagmedian{} days; only \filedthirtyone\% of hedge fund reports appear
+within a month), over \rqthreequartersM{} formation quarters
 (2022Q1--2026Q2). Because the model is barely better than each fund's
 majority action, a ``surprise'' here is mostly a trade against the fund's
-usual direction. Table~\ref{tab:rq3main} reports three primary spreads (in
-\% over the window; positive means the surprising trades did better), with
-Holm-adjusted $p$-values within each sample and across all nine primary
-tests. In the hand-picked sample, the sell spread is \pdsellsM\%: stocks the
-funds sold unexpectedly did worse than stocks they sold predictably ($t =
-\pdsellstM$; Holm $p = \pdsellsholmM$ within the sample and \pdsellsholmallM{}
-across samples), also when every trade without a price is treated as a
-delisting that loses 30\% (\pdsellsdlM\%). But the spread is smaller after
-matching each stock to universe stocks of the same size and momentum tercile
-(\pdsellschM\%, $t = \pdsellschtM$), and it does not replicate in the Form
-ADV sample (\pdsellsA\%, $t = \pdsellstA$) or among long-only managers
-(\pdsellsL\%, $t = \pdsellstL$). Comparing a fund's surprise sells only with
-its own predicted sells in the same quarter gives a similar point estimate
-but far less precision (\wfsellsM\%, $t = \wfsellstM$), so we cannot tell
-whether the spread reflects which funds are selling or which stocks they
-sell. Sells against a fund's overall direction resemble the discretionary,
-valuation-motivated trades that~\cite{alexander2007motivation} find
-informative for mutual funds. Surprise buys
-and the stock-level spread show no edge in any sample, and neither do sorts
-on the model's probability of the action taken (surprise intensity).
-Unconditionally, the funds' buys do not beat their sells over the window
+usual direction. Table~\ref{tab:rq3main} reports three primary spreads (in \%
+over the window; positive means the surprising trades did better), with
+Holm-adjusted $p$-values within each sample and across all nine primary tests. In
+the hand-picked sample the sell spread is \pdsellsM\%: stocks the funds sold
+unexpectedly did worse than stocks they sold as predicted ($t =
+\pdsellstM$; Holm $p = \pdsellsholmM$ within the sample and
+\pdsellsholmallM{} across samples). This holds even when every trade without
+a price is treated as a delisting that loses 30\% (\pdsellsdlM\%). But the
+spread is smaller after matching each stock to universe stocks of the same
+size and momentum tercile (\pdsellschM\%, $t = \pdsellschtM$), and it does not
+replicate in the Form ADV sample (\pdsellsA\%, $t = \pdsellstA$) or among
+long-only managers (\pdsellsL\%, $t = \pdsellstL$). Comparing a fund's
+surprise sells only with its own predicted sells in the same quarter gives a
+similar point estimate but much less precision (\wfsellsM\%, $t =
+\wfsellstM$), so we cannot tell whether the spread reflects which funds are
+selling or which stocks they sell. Sells against a fund's overall direction
+resemble the discretionary, valuation-motivated trades
+that~\cite{alexander2007motivation} find informative for mutual funds.
+Surprise buys and the stock-level spread show no edge in any sample, and
+neither do sorts on the model's probability of the action taken (surprise
+intensity). Across all trades, the funds' buys do not beat their sells over the window
 (\pduncondM\% and \pduncondA\% for the two hedge fund samples). For a copier,
 who can trade only after the filing, the three months after disclosure show
 no significant spread (sells \cpsellsM\%, $t = \cpsellstM$; buys
 \cpbuysM\%, $t = \cpbuystM$).
 
-Two further checks follow~\cite{cohen2026mimicking} more closely. Over the
-quarter in which the trades were made, surprise sells underperform predicted
-sells by \tqsellsM\% in the hand-picked sample ($t = \tqsellstM$) and
-\tqsellsL\% among long-only managers ($t = \tqsellstL$); but this window
-contains the funds' own reaction to price moves and their price pressure, so
-it cannot separate skill from funds selling what had already fallen. At the
+Following~\cite{cohen2026mimicking} more closely at the
 manager level, a fund's predictability gain is unrelated to the payoff of its
 trades before disclosure (rank correlation \mgrrhoM{} [\mgrloM, \mgrhiM]
 across \mgrnM{} hand-picked funds; \mgrrhoA{} and \mgrrhoL{} in the other
 samples).
 
-A calendar-time version over the three months after quarter-end, which
-spans disclosure, agrees: the surprise-sells spread is \rawsells\% per month
-raw ($t = \rawsellst$) and \ffsells\% ($t = \ffsellst$) after the five
-Fama--French factors and momentum; across weightings and holding periods of
-up to 12 months (Newey--West lags equal to the holding period), \rqthreesig{}
-of 24 overlapping, exploratory specifications reach $|t| \geq 1.96$. By style
-multi-strategy funds' surprise sells stand out
-(\multisellsalpha\% per month, $t = \multisellst$), one of \nstyletests{}
-estimable exploratory spreads (activist and macro portfolios are too small to
-estimate). The hand-picked sell spread exceeds the Form
-ADV one by \diffsamplesells\% per month ($t = \diffsamplesellst$), but funds in
-both samples and funds only in the hand-picked one have similar spreads
-(\overlapsells\% and \nonoverlapsells\%), so the gap does not come from
-hand-picking winners.
+A calendar-time version over the three months after quarter-end, which spans
+disclosure, agrees. The surprise-sells spread is \rawsells\% per month raw
+($t = \rawsellst$) and \ffsells\% ($t = \ffsellst$) after the five
+Fama--French factors and momentum. Across weightings and holding periods of up
+to 12 months (Newey--West lags equal to the holding period), \rqthreesig{} of
+24 overlapping, exploratory specifications reach $|t| \geq 1.96$. The hand-picked
+sell spread exceeds the Form ADV one by \diffsamplesells\% per month ($t =
+\diffsamplesellst$). On the other hand, funds in both samples and funds only in the
+hand-picked one have similar spreads (\overlapsells\% and
+\nonoverlapsells\%), so the gap does not come from hand-picking winners.
 
 These tests have limited power. In the calendar-time version, the smallest
-monthly alpha we could detect with 80\% power is \trademdelo--\trademdehi\% for the trade-level spreads and
-\stockmdeM\% for the stock-level spread. For the stock-level spread, where
-\cite{cohen2026mimicking} report a five-factor alpha of 3.86\% per year (0.32\%
-per month) for mutual funds, our 95\% intervals are [\stockciloM, \stockcihiM]
-(hand-picked) and [\stockciloA, \stockcihiA] (Form ADV), in \% per month, so
-we cannot rule out an effect of that size. Our conclusion is narrow: apart
-from one result for surprise sells that is specific to the hand-picked sample
-and weakens with size and momentum matching, any
-extra return to unpredicted 13F trades is statistically indistinguishable
-from zero over this window.
+monthly alpha we could detect with 80\% power is \trademdelo--\trademdehi\%
+for the trade-level spreads and \stockmdeM\% for the stock-level spread. For
+the stock-level spread, where~\cite{cohen2026mimicking} report a five-factor
+alpha of 3.86\% per year (0.32\% per month) for mutual funds, our 95\%
+intervals are [\stockciloM, \stockcihiM] (hand-picked) and [\stockciloA,
+\stockcihiA] (Form ADV), in \% per month, so we cannot rule out an effect of
+that size. Our conclusion is narrow: apart from one result for surprise sells
+that is specific to the hand-picked sample and weakens with size and momentum
+matching, any extra return to unpredicted 13F trades is statistically
+indistinguishable from zero over this window.

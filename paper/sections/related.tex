@@ -1,54 +1,52 @@
 \section{Related Work}
 
 \paragraph{Institutional holdings, herding and skill.}
-Quarterly holdings are the standard window into what professional investors
-trade. A large literature asks whether institutions herd, buying and selling
-the same stocks at the same time~\cite{lakonishok1992impact, wermers1999herding,
-sias2004herding}, and whether the trades in their holdings reveal
-skill~\cite{chen2000value}, typically judging performance against
+Quarterly holdings are the standard way to observe what professional
+investors trade. Many studies ask whether institutions herd, buying and selling the same
+stocks at the same time~\cite{lakonishok1992impact, wermers1999herding,
+sias2004herding}, and whether their trades reveal
+skill~\cite{chen2000value}, usually judging performance against
 characteristic-matched benchmarks~\cite{daniel1997measuring}. For hedge funds,
-13F filings show that they rode the technology bubble and exited before the
-crash~\cite{brunnermeier2004bubble}, give only weak evidence that hedge funds
-pick better stocks than mutual funds~\cite{griffin2009smart}, and indicate
-that positions whose disclosure is delayed through confidential treatment
-earn abnormal returns~\cite{agarwal2013hide, aragon2013confidential}, so the
-most informed trades may be the least visible. We ask a complementary
-question: how much of what is disclosed could have been predicted in advance,
-complementing demand-system models of institutional holdings~\cite{koijen2019demand}.
-Disclosed holdings can also be copied: funds that mimic other funds' disclosed
-portfolios can earn returns comparable to, and sometimes above, those of the
-originals~\cite{frank2004copycat, verbeek2013copycat}, which makes the predictability of disclosed trades of
-direct practical interest.
+13F filings show that they rode the technology bubble and got out before the
+crash~\cite{brunnermeier2004bubble}. These filings give only weak evidence that hedge
+funds pick better stocks than mutual funds~\cite{griffin2009smart}, and
+positions whose disclosure is delayed through confidential treatment earn
+abnormal returns~\cite{agarwal2013hide, aragon2013confidential}, so the most
+informed trades may be the least visible. We aim to answer a different question: how
+much of what is disclosed could have been predicted prior to disclosure? This
+complements demand-system models of institutional
+holdings~\cite{koijen2019demand}. Disclosed holdings can also be copied: funds
+that mimic other funds' disclosed portfolios can earn returns similar to, and
+sometimes higher than, the originals~\cite{frank2004copycat,
+verbeek2013copycat}, which makes the predictability of disclosed trades a
+practical question as well.
 
 \paragraph{Predicting fund managers' trades.}
 Cohen, Lu and Nguyen~\cite{cohen2026mimicking} predict 71\% of active mutual
-fund managers' buy/hold/sell decisions with LSTMs trained per fund on
-Morningstar holdings (1990--2023), against 52\% for each fund's most common
-action, and show that less predictable managers and positions outperform.
-Izadifar and Rahmati~\cite{izadifar2026holdings} forecast institutional
-portfolio weights from 13F data for 99 managers with temporal graph models and
-find that a simple persistence forecast beats all but one of the graph models. To our knowledge, we are the
-first to apply the trade-direction design of~\cite{cohen2026mimicking} to
-hedge funds, and to compare them with long-only managers inside one pipeline.
+fund managers' buy, hold and sell decisions with LSTMs trained per fund on
+Morningstar holdings (1990--2023), compared with 52\% for each fund's most
+common action. Moreover, they show that less predictable managers and positions
+perform better. Izadifar and Rahmati~\cite{izadifar2026holdings} forecast the
+portfolio weights of 99 managers from 13F data with temporal graph models, and
+find that a simple persistence forecast beats all but one of their graph
+models.
 
 \paragraph{Foundation models in finance.}
 Chronos~\cite{ansari2024chronos}, Chronos-2~\cite{ansari2025chronos2} and
-TimesFM~\cite{das2024timesfm} forecast unseen time series zero-shot.
-Rahimikia, Ni and Wang~\cite{rahimikia2025tsfm} find that off-the-shelf
-models forecast daily excess returns poorly and that training only on
-financial data works better; they release such models for each
-year, which lets us use one trained only on data before our test period.
-Noguer i Alonso and Pereira Franklin~\cite{noguer2026tsfm} benchmark several
+TimesFM~\cite{das2024timesfm} forecast time series they have never seen
+(zero-shot). Rahimikia, Ni and Wang~\cite{rahimikia2025tsfm} find that
+off-the-shelf models forecast daily excess returns poorly and that models
+trained only on financial data do better. They release such a model for each
+year, which lets us use one trained solely on data prior to our test period.
+Noguer i Alonso and Pereira Franklin~\cite{noguer2026tsfm} test several
 pre-trained models, including Chronos-2, on five large U.S.\ stocks and find
-gains over a random walk that are sparse and small. Zhang and
-Zhang~\cite{zhang2026review} review LLMs for stock forecasting and stress
-often-understated pitfalls, including data leakage, dataset and horizon
-design, and evaluation metrics. These studies forecast prices; we
-test foundation models on an investor's position size.
+that their gains over a random walk are small and rare. These studies forecast prices, while we
+test foundation models on the size of an investor's position.
 
 \paragraph{News, sentiment and lookahead bias.}
 We score headlines from FNSPID~\cite{dong2024fnspid} with
 FinBERT~\cite{araci2019finbert} and use the policy-uncertainty index
 of~\cite{baker2016epu}. Forecasts from large language models can be inflated
-by memorized outcomes; Gao, Jiang and Yan~\cite{gao2025lookahead} propose a
-test for this lookahead bias. \todo{LLM arm: results after the overnight runs}
+when the model has memorized what happened; Gao, Jiang and
+Yan~\cite{gao2025lookahead} propose a test for this lookahead bias.
+\todo{LLM arm: results after the overnight runs}
