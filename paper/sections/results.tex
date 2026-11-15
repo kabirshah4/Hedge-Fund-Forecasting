@@ -14,9 +14,9 @@ it appears in all \dmposM{} test quarters (Diebold--Mariano $t = \dmtM$, $p <
 0.001$; $t \geq \dmtminall$ in the other samples). The choice of model does not appear to
 matter much. Logistic regression reaches \logitM\%, and an LSTM over each
 position's last eight quarters, the model family of~\cite{cohen2026mimicking},
-reaches \lstmM\%. The LSTM is slightly above LightGBM in per-fund accuracy but
-below it on the other three metrics, so we report LightGBM; the conclusions
-are the same with the LSTM. Simple rules are not able to beat the baseline, including
+reaches \lstmM\%, slightly above LightGBM in per-fund accuracy but below it
+on the other three metrics; conclusions are the same with either. Simple rules
+do not beat the baseline, including
 each fund's majority action over its last eight quarters (\recentM\%), because
 hedge funds' overall direction changes from quarter to quarter. The model
 relies mostly on fund identity, the position's weight and rank, and recent
@@ -39,11 +39,10 @@ predictable is habit, not herding.
 The average gain hides how it is spread across funds (Figure~\ref{fig:rq1}). For the median hedge fund the model adds \medgainM{} points, and
 only \naboveM{} of \activeM{} funds gain more than one point. The gain comes
 from the \nlowbaseM{} funds without a dominant action (baseline below 50\%),
-where it is \gainlowbaseM{} points; for the rest it is \gainrestM{}. This is
-not because large funds dominate the pooled training data: training with
+where it is \gainlowbaseM{} points; for the rest it is \gainrestM{}. Large
+funds do not drive this: training with
 equal total weight per fund gives a mean gain of \fundwtgainM{} and a median
-of \fundwtmedM. Because hedge fund actions split almost evenly between BUY and
-SELL, we also report measures that do not depend on the class mix. The model fixes
+of \fundwtmedM. On measures that do not depend on the class mix, the model fixes
 \errredM\% of the baseline's errors, lowers log-loss by \llskillM\% relative
 to each fund's training class frequencies, and ranks a random BUY above a
 random SELL with probability \aucbsM{}. Pooled accuracy (\lgbpooledM\%) is

@@ -147,3 +147,8 @@ responsibility for the content."
 - Minus signs: num() emitted $-$, which broke inside math ("t =-2.3"); now \ensuremath{-}. All numbers otherwise identical.
 - Method: return windows past the last price are dropped, not truncated (rq3_v2.py already did this).
 - Not changed: header trailing comma in the review build comes from the empty conference location; fill in once ICAIF '27's venue is announced.
+
+## 2026-11-14: Anonymized repository for review
+- Orphan branch `review` (one commit by "Anonymous"): excludes paper/main.pdf, docs/, paper/factsheets.*; main.tex author set to "Anonymous Author". Mirrored at https://anonymous.4open.science/r/hedge-fund-13f (manual refresh; auto-update is paid). If code changes before submission, rebuild the branch and refresh there.
+- Related Work: the user's own rewrite, with grammar fixes; three RQ1 sentences tightened to stay at 8 pages.
+- Named (arXiv) build currently also shows the anonymous link; switch to the public GitHub repo once it is made public.

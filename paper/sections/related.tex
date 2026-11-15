@@ -1,43 +1,47 @@
 \section{Related Work}
 
 \paragraph{Institutional holdings, herding and skill.}
-Quarterly holdings are the standard way to observe what professional
-investors trade. Many studies ask whether institutions herd, buying and selling the same
-stocks at the same time~\cite{lakonishok1992impact, wermers1999herding,
-sias2004herding}, and whether their trades reveal
-skill~\cite{chen2000value}, usually judging performance against
-characteristic-matched benchmarks~\cite{daniel1997measuring}. For hedge funds,
-13F filings show that they rode the technology bubble and got out before the
-crash~\cite{brunnermeier2004bubble}. These filings give only weak evidence that hedge
-funds pick better stocks than mutual funds~\cite{griffin2009smart}, and
-positions whose disclosure is delayed through confidential treatment earn
-abnormal returns~\cite{agarwal2013hide, aragon2013confidential}, so the most
-informed trades may be the least visible. We aim to answer a different question: how
-much of what is disclosed could have been predicted prior to disclosure? This
-complements demand-system models of institutional
-holdings~\cite{koijen2019demand}. Disclosed holdings can also be copied: funds
-that mimic other funds' disclosed portfolios can earn returns similar to, and
-sometimes higher than, the originals~\cite{frank2004copycat,
-verbeek2013copycat}, which makes the predictability of disclosed trades a
-practical question as well.
+A standard way to see what professional investors trade is to look at their
+quarterly holdings. Many studies ask whether institutions herd, i.e.\ buy and
+sell the same stocks at the same time~\cite{lakonishok1992impact,
+wermers1999herding, sias2004herding}. Others ask whether institutions show
+evidence of skill~\cite{chen2000value}, typically by comparing performance
+with that of characteristic-matched benchmark
+portfolios~\cite{daniel1997measuring}. For hedge funds, 13F filings show that
+they participated in the technology bubble and then got out before it
+burst~\cite{brunnermeier2004bubble}. The 13F filings provide only weak
+evidence that hedge funds pick better stocks than mutual
+funds~\cite{griffin2009smart}. Confidentially treated positions, whose
+disclosure is delayed, earn abnormal returns~\cite{agarwal2013hide,
+aragon2013confidential}; thus, the best informed positions may also be those
+least visible. Our aim is to address a different question: how much of the
+disclosed trades could have been predicted prior to disclosure? Our study
+complements work on demand-system models of institutional
+holdings~\cite{koijen2019demand}. Disclosed holdings may also be copied: by
+mimicking the disclosed portfolios of other funds, funds can earn returns
+similar to, if not higher than, those earned by the original
+funds~\cite{frank2004copycat, verbeek2013copycat}. This makes the question of
+how predictable disclosed trades are a practically relevant one as well.
 
 \paragraph{Predicting fund managers' trades.}
-Cohen, Lu and Nguyen~\cite{cohen2026mimicking} predict 71\% of active mutual
-fund managers' buy, hold and sell decisions with LSTMs trained per fund on
-Morningstar holdings (1990--2023), compared with 52\% for each fund's most
-common action. Moreover, they show that less predictable managers and positions
-perform better. Izadifar and Rahmati~\cite{izadifar2026holdings} forecast the
-portfolio weights of 99 managers from 13F data with temporal graph models, and
-find that a simple persistence forecast beats all but one of their graph
+Cohen, Lu and Nguyen~\cite{cohen2026mimicking} show that they can predict
+71\% of active mutual fund managers' buy, hold and sell decisions, training an
+LSTM per fund on Morningstar holdings data from 1990 through 2023. This beats
+predicting each fund's most common action, which yields a 52\% accuracy.
+Furthermore, they show that less predictable managers and positions perform
+better. Izadifar and Rahmati~\cite{izadifar2026holdings} forecast the
+portfolio weights of 99 managers using 13F data and temporal graph models.
+They find that a simple persistence forecast beats all but one of their graph
 models.
 
 \paragraph{Foundation models in finance.}
 Chronos~\cite{ansari2024chronos}, Chronos-2~\cite{ansari2025chronos2} and
-TimesFM~\cite{das2024timesfm} forecast time series they have never seen
-(zero-shot). Rahimikia, Ni and Wang~\cite{rahimikia2025tsfm} find that
-off-the-shelf models forecast daily excess returns poorly and that models
-trained only on financial data do better. They release such a model for each
-year, which lets us use one trained solely on data prior to our test period.
+TimesFM~\cite{das2024timesfm} are all capable of forecasting time series that
+they have never seen before (i.e.\ they can forecast zero-shot). Rahimikia,
+Ni and Wang~\cite{rahimikia2025tsfm} show that off-the-shelf foundation models
+forecast daily excess returns poorly, and that models trained only on
+financial data perform better. They release one such model per year, so we
+can use one trained solely on data before our test period.
 Noguer i Alonso and Pereira Franklin~\cite{noguer2026tsfm} test several
 pre-trained models, including Chronos-2, on five large U.S.\ stocks and find
 that their gains over a random walk are small and rare. These studies forecast prices, while we
