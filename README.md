@@ -1,6 +1,6 @@
 # Hedge fund trade predictability with foundation models
 
-Code for the paper *Herding or Skill? Foundation Models and the Predictability of Hedge Fund Trades*.
+Code for the paper *How Predictable Are Hedge Fund Trades? Evidence from 13F Filings and Foundation Models*.
 
 It asks three questions:
 - **RQ1:** How predictable are hedge funds' quarterly buy/hold/sell decisions from public information?

@@ -25,7 +25,7 @@ shards from THIS Mac, pointing shard 1 at the other Mac with --url. No data
 or code has to be copied.
 Runs are resumable: finished stock-quarters are skipped on restart.
 
-One-Mac-elsewhere mode (what we use: the LLM runs only on Mom's Mac):
+One-Mac-elsewhere mode (what we use: the LLM runs only on a second Mac):
   .venv/bin/python src/llm_news.py --export     # writes tools/llm_runner/jobs.jsonl
   (AirDrop the tools/llm_runner folder to the other Mac, run run_jobs.py there,
    AirDrop results.jsonl back, then:)
