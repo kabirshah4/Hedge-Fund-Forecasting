@@ -1,2 +1,2 @@
-quarters,stock_quarters,rank_corr_named,rank_corr_anon,gap_named_minus_anon,t_gap,same_outlook_share
-8,12,-0.9999999999999999,-0.9999999999999999,0.0,,0.5833333333333334
+quarters,stock_quarters,rank_corr_named,rank_corr_anon,gap_named_minus_anon,t_gap,p_gap,quarters_gap_positive,same_outlook_share
+12,5812,0.0007019196927331583,-0.02215283650246377,0.02285475619519692,2.478663215353929,0.03064638748533755,9,0.7071576049552649

@@ -130,3 +130,10 @@ responsibility for the content."
   capacity details, misplaced N-PORT clause in the Figure 1 paragraph. Both PDFs 8 pages.
 - LLM runner: watcher (PID-based) restarts run_jobs.py without a stop time after the 7 AM stop,
   at Kabir's request ("keep it running after 7am").
+
+## 2026-11-14: LLM arm results filled in
+- Llama 3.1 8B scored 30,604 stock-quarters (24,596 named, 6,008 anonymized incl. a 44-row test run from Nov 13; same model and prompt). 1.1% of answers unreadable, treated as missing.
+- RQ2: LLM features add -0.05 [-0.56, 0.44] (t-1) and +0.11 [-0.61, 0.93] (t) points; no change to any other RQ2 number after the rerun.
+- Memorization (2021-2023, 5,812 stock-quarters, 12 quarters): rank corr with next-quarter return 0.00 named vs -0.02 anonymized; gap t = 2.5, p = .031, positive in 9/12 quarters; 71% identical outlooks. Name changes some answers but named outlooks don't predict returns.
+- Fixed llm_memorization.py: a 1-stock 2024Q1 quarter was counted in the t-test's n; now quarters need >= 30 stocks, and a p-value is reported.
+- To stay at 8 pages: shortened the method/results LLM text, the news sentence, the future-work line (LLM test now done), and turned Threats to validity from a list into a paragraph.

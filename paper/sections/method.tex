@@ -81,7 +81,9 @@ the 13F report for $t$ is public), averaged over the whole quarter or over its
 last 15 days only. We first remove headlines that mention a stake, a 13F, 13D
 or 13G filing, or an investor taking, raising, lowering, cutting or exiting a
 position (0.7\%), so news that reports a fund's own trade cannot leak into
-its prediction.
+its prediction. An LLM (Llama~3.1 8B, trained to December 2023) also rates
+each stock-quarter's headlines for outlook and new information; to test for
+memorization, 2021--2023 is rescored with names hidden~\cite{gao2025lookahead}.
 
 \paragraph{Metrics.} Our main measure is mean per-fund accuracy (the measure
 of~\cite{cohen2026mimicking}). We also report pooled accuracy, macro-F1, and

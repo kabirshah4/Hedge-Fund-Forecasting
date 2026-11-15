@@ -22,6 +22,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 from rq2_models import llm_features
 from rq3_returns import quarterly_yahoo_returns
@@ -45,13 +46,15 @@ def main() -> None:
         "named": g["llm_outlook_named"].corr(g["ret_next"], method="spearman"),
         "anon": g["llm_outlook_anon"].corr(g["ret_next"], method="spearman"),
         "n": len(g)}), include_groups=False)
+    per_q = per_q[per_q["n"] >= 30]  # drop near-empty quarters (news ends in 2023)
     per_q["gap"] = per_q["named"] - per_q["anon"]
     t = per_q["gap"].mean() / (per_q["gap"].std(ddof=1) / np.sqrt(len(per_q)))
+    pval = 2 * stats.t.sf(abs(t), len(per_q) - 1)
     agree = (B["llm_outlook_named"] == B["llm_outlook_anon"]).mean()
     out = pd.DataFrame([{
         "quarters": len(per_q), "stock_quarters": len(B),
         "rank_corr_named": per_q["named"].mean(), "rank_corr_anon": per_q["anon"].mean(),
-        "gap_named_minus_anon": per_q["gap"].mean(), "t_gap": t, "same_outlook_share": agree,
+        "gap_named_minus_anon": per_q["gap"].mean(), "t_gap": t, "p_gap": pval, "quarters_gap_positive": int((per_q["gap"] > 0).sum()), "same_outlook_share": agree,
     }])
     EXP.mkdir(exist_ok=True)
     out.to_csv(EXP / "llm_memorization.csv", index=False)

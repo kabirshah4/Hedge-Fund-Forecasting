@@ -195,11 +195,14 @@ multiplicity), and the gain disappears in the 2022--2023 subperiod; TimesFM
 adds \rqtwotimesfm{} [\rqtwotimesfmlo, \rqtwotimesfmhi]. News does not help,
 whether from the previous quarter (a forecast), from the same quarter (a
 nowcast made before the filing is public), or only from the last 15 days
-before quarter-end, which tests whether averaging over a quarter washes out
-short-lived news. No interval reaches beyond \rqtwomaxhi{} points, which
+before quarter-end. No interval reaches beyond \rqtwomaxhi{} points, which
 is small next to the model's own gain over the majority baseline in the same
 2022--2023 window (\newswindowgain{} points [\newswindowlo, \newswindowhi]).
-\todo{LLM reading of news and the memorization check: after the overnight runs}
+The LLM's reading of the news does not help either (\rqtwollmprev{} and
+\rqtwollmnow{} points; Table~\ref{tab:rq2}). Its outlook's rank correlation
+with next-quarter market-adjusted returns is \llmmemnamed{} with the name
+shown and \llmmemanon{} hidden (gap $t = \llmmemt$, $p = \llmmemp$): the
+name changes some answers, but even named outlooks do not predict returns.
 
 \subsection{RQ3: Do unpredicted trades earn more?}
 

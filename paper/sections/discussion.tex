@@ -10,19 +10,18 @@ the contrast with the 71\% reported for mutual funds~\cite{cohen2026mimicking}
 gives no evidence about hedge fund secrecy or skill. Adding \firmn{} standard firm
 characteristics barely helps, so what remains is mainly the holdings data:
 fund-level Morningstar holdings with long histories against public filings,
-which our design cannot test directly. The oracle shows that even a fund's overall direction leaves its
+which our design cannot test. The oracle shows that even a fund's overall direction leaves its
 stock choices unpredictable. Unpredicted trades show no consistent extra
 return, and the window is too short to rule out an effect as large as the one
-for mutual funds. For anyone who uses holdings disclosures to model or copy
-managers, the message is the same for hedge funds and mutual funds: expect
-little predictability beyond habit, and do not treat unpredicted trades as a
-reliable signal.
+for mutual funds. For anyone who models or copies managers from disclosures,
+the message is the same for both: expect little beyond habit, and do not
+treat unpredicted trades as a reliable signal.
 
 \paragraph{Implications for foundation models in finance.} Position-size
 histories are short (a median of \medhistM{} quarters), irregular and driven
 by decisions rather than dynamics, so zero-shot models, even one pre-trained
-on financial returns, have little to work with. The next logical step is to
-pre-train or fine-tune them on holdings instead of prices.
+on financial returns, have little to work with; pre-training on holdings
+instead of prices is the natural next step.
 
 \paragraph{Two pitfalls.} Keeping a stock's next-quarter return only if it
 stays in the top-500 universe, which is known only afterwards, inflated an
@@ -31,16 +30,14 @@ changes legal entity silently drops out of a sample built on one SEC
 identifier; we found and fixed one such case (Winton).
 
 \paragraph{Threats to validity.}
-\begin{itemize}
-  \item \textbf{What 13F shows:} long positions at quarter-end, combined
+\textbf{What 13F shows:} long positions at quarter-end, combined
   across a firm; no shorts, derivatives or trading within the quarter.
-  \item \textbf{Samples:} the hand-picked list is curated; the Form ADV list
+  \textbf{Samples:} the hand-picked list is curated; the Form ADV list
   misses funds that file under other entity names and does not follow
   reorganizations; three ETF sponsors pass the long-only rule (we report
   results without them).
-  \item \textbf{Scope:} new positions are excluded, as
+  \textbf{Scope:} new positions are excluded, as
   in~\cite{cohen2026mimicking}, although they may be the most informative
   trades for activist funds; the universe excludes small stocks.
-  \item \textbf{Data and power:} Yahoo prices are missing for 5\% of test
+  \textbf{Data and power:} Yahoo prices are missing for 5\% of test
   positions; FNSPID news ends in 2023; RQ3 has 18 quarters.
-\end{itemize}
