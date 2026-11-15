@@ -137,3 +137,13 @@ responsibility for the content."
 - Memorization (2021-2023, 5,812 stock-quarters, 12 quarters): rank corr with next-quarter return 0.00 named vs -0.02 anonymized; gap t = 2.5, p = .031, positive in 9/12 quarters; 71% identical outlooks. Name changes some answers but named outlooks don't predict returns.
 - Fixed llm_memorization.py: a 1-stock 2024Q1 quarter was counted in the t-test's n; now quarters need >= 30 stocks, and a p-value is reported.
 - To stay at 8 pages: shortened the method/results LLM text, the news sentence, the future-work line (LLM test now done), and turned Threats to validity from a list into a paragraph.
+
+## 2026-11-14: Sixth-review quick fixes
+- Table 2 "Tuned" = "Main" / long-only +6.2 x3: not a copy bug. Different runs and settings (tuned hand-picked = 7 leaves, lr 0.1); long-only is 6.18 / 6.16 / 6.19. Caption now says equal entries agree only after rounding.
+- Weak-signal "12 draws" vs Table 2 "3 draws": both right (4 strengths x 3 draws; the table's 3 draws are for the strong rules). Text now says so; ranges are per-strength averages. Verified model gain > other funds in 12/12 individual draws.
+- Equivalence: "about 6.0" -> both bounds, 6.0 (hand-picked) and 6.5 (Form ADV).
+- Abstract: "no detectable extra return". Discussion: "not an outlier" -> "in our pipeline they do not stand out".
+- Table 5: the all-samples Holm row (sells only) moved directly under Sells and relabeled.
+- Minus signs: num() emitted $-$, which broke inside math ("t =-2.3"); now \ensuremath{-}. All numbers otherwise identical.
+- Method: return windows past the last price are dropped, not truncated (rq3_v2.py already did this).
+- Not changed: header trailing comma in the review build comes from the empty conference location; fill in once ICAIF '27's venue is announced.

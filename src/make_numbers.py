@@ -31,7 +31,7 @@ def num(x, d=1, sign=False):
         return "--"
     s = f"{abs(x):,.{d}f}"
     if round(x, d) < 0:
-        return f"$-${s}"
+        return f"\\ensuremath{{-}}{s}"
     return ("+" if sign and round(x, d) > 0 else "") + s
 
 
@@ -499,13 +499,14 @@ def rq3_main():
              r"     & \multicolumn{2}{c}{Hedge funds} & Long-only \\ \cmidrule(lr){2-3}",
              r"     & Hand-picked & Form ADV & managers \\", r"    \midrule",
              r"    \multicolumn{4}{@{}l}{\emph{Primary}} \\"]
-    for label, test in [("Sells (pred. $-$ surpr.)", "sells"), ("Buys (surpr. $-$ pred.)", "buys"),
-                        ("Stocks (Q1 $-$ Q5)", "stocks")]:
-        lines.append(f"    {label} & " + " & ".join(cell(k, test, True) for k in "MAL") + r" \\")
     def holm_all(k):
         r = R[(R["sample"] == smp[k]) & (R["test"] == "sells")].iloc[0]
         return f"[{r['p_holm_all']:.3f}]"
-    lines.append(r"    \quad Holm, all samples & " + " & ".join(holm_all(k) for k in "MAL") + r" \\")
+    for label, test in [("Sells (pred. $-$ surpr.)", "sells"), ("Buys (surpr. $-$ pred.)", "buys"),
+                        ("Stocks (Q1 $-$ Q5)", "stocks")]:
+        lines.append(f"    {label} & " + " & ".join(cell(k, test, True) for k in "MAL") + r" \\")
+        if test == "sells":
+            lines.append(r"    \quad Holm over all nine & " + " & ".join(holm_all(k) for k in "MAL") + r" \\")
     lines.append(r"    \multicolumn{4}{@{}l}{\emph{Secondary}} \\")
     for label, test in [("All buys $-$ sells", "unconditional"),
                         ("Sells, size--mom. adj.", "sells (size-momentum adjusted)"),
@@ -543,9 +544,10 @@ def controls():
     lines = [r"\begin{table}[t]",
              r"  \caption{Can the pipeline find predictability where it exists? Top: a random 10\% or 25\% of",
              r"  hand-picked funds is made to follow a visible rule (BUY if the stock's four-quarter momentum is",
-             r"  positive), exactly or for 80\% of positions; mean test accuracy of those funds (3 draws). Bottom:",
+             r"  positive), exactly or for 80\% of positions; mean test accuracy of those funds over 3 draws. Bottom:",
              r"  gain over the majority baseline (points, 95\% interval) when testing 2017--2019 (training",
-             r"  2013Q3--2015) and with the best of 20 LightGBM configurations chosen on 2021.}",
+             r"  2013Q3--2015) and with the best of 20 LightGBM configurations chosen on 2021. Equal entries in a row",
+             r"  agree only after rounding (long-only: 6.18, 6.16, 6.19).}",
              r"  \label{tab:controls}", r"  \footnotesize", r"  \setlength{\tabcolsep}{3pt}",
              r"  \begin{tabular}{@{}lccc@{}}", r"    \toprule",
              r"    Injected funds & Baseline & Model & Rule (ceiling) \\", r"    \midrule"]
@@ -694,7 +696,7 @@ def llm_numbers():
     import json
     L = pd.read_csv(ROOT / "experiments" / "llm_memorization.csv").iloc[0]
     m("llmmemnamed", f"{L['rank_corr_named']:.2f}".replace("-0.00", "0.00"))
-    m("llmmemanon", f"{L['rank_corr_anon']:.2f}".replace("-", "$-$"))
+    m("llmmemanon", f"{L['rank_corr_anon']:.2f}".replace("-", "\\ensuremath{-}"))
     m("llmmemgap", f"{L['gap_named_minus_anon']:.3f}")
     m("llmmemt", f"{L['t_gap']:.1f}")
     m("llmmemp", f"{L['p_gap']:.3f}".lstrip("0"))

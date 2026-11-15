@@ -125,7 +125,8 @@ three months after the filing (a copier's window), and relate each fund's predic
 regress calendar-time portfolios held for 3--12 months on the Fama--French
 five factors~\cite{fama2015five} and momentum~\cite{carhart1997persistence},
 with Newey--West errors~\cite{newey1987hac} whose lags equal the holding
-period. Yahoo returns cover the stocks behind 95\% of test positions. The rest
+period. Quarters whose return window ends after our last price are dropped,
+not truncated. Yahoo returns cover the stocks behind 95\% of test positions. The rest
 are mostly stocks without a current U.S.\ ticker, many of them delisted, and
 they are spread evenly across buys, sells, surprises and predicted trades. As
 a bound, we treat every trade without a price as a delisting that loses 30\%
