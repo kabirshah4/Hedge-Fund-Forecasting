@@ -1,0 +1,26 @@
+\begin{abstract}
+A recent study finds that machine learning can predict the direction of 71\%
+of the trades mutual fund managers make, and the trades it cannot predict perform better. What about
+hedge funds? We use free SEC filings from 2013 to 2026 and a single modeling
+pipeline to study two samples of hedge funds (one hand-picked and one selected
+by rule from Form ADV filings made before the sample begins), active long-only
+managers, and N-PORT mutual funds. For each existing position in the 500 most
+widely held U.S.\ stocks, we predict the quarter-end buy, hold, or sell action
+before the filing becomes public. For hedge funds, a gradient-boosted model
+corrects only \errredM\% of the mistakes of each fund's majority action
+(\gainM{} points of accuracy, in all \dmposM{} test quarters), and none for the median fund. The pipeline finds
+planted signals as small as the real effect, and adding more training history provides
+little benefit. Hedge funds do not appear to be special: long-only managers and
+individual mutual funds are not significantly more predictable, aggregating
+mutual funds has no significant effect, and 2017--2019 is no more predictable
+than 2022--2026. Three zero-shot time-series foundation models match or fall below the
+majority-action baseline in per-fund accuracy. Stocks that the
+hand-picked hedge funds sold unexpectedly (mostly against their usual direction) fell more before disclosure than
+stocks they sold as predicted, but this effect weakens with size and momentum
+matching and does not replicate in the other samples. Apart from this,
+unpredicted trades earn no detectable extra return, although with \rqthreequartersM{}
+quarters we cannot rule out effects as large as those reported for mutual
+funds. Adding \firmn{} firm characteristics barely helps: with public data,
+disclosed holdings reveal little about managers' future trades beyond their
+habits.
+\end{abstract}

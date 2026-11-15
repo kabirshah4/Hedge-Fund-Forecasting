@@ -1,0 +1,17 @@
+TEST 1: future-scramble test (features for quarter T must not change)
+  T = 2022Q1: 5,162 rows, 19 features -> PASS  (control: 13 features of quarter T+1 did change, as they should)
+  T = 2024Q2: 5,409 rows, 19 features -> PASS  (control: 13 features of quarter T+1 did change, as they should)
+  T = 2026Q1: 5,528 rows, 19 features -> PASS  (control: 13 features of quarter T+1 did change, as they should)
+
+TEST 2: filing timing (fund-quarters; filing date of the version we use)
+  all years: n=2,441, median lag 45 days, <=45 days 77.1%, 46-135 days 22.4%, >135 days (after the next 13F is due) 0.5%
+  test inputs (2021Q4 on): n=913, median lag 45 days, <=45 days 84.9%, 46-135 days 15.0%, >135 days (after the next 13F is due) 0.1%
+  late fund-quarters by fund (most first):
+    Citadel Advisors: 3
+    Two Sigma Investments: 2
+    Viking Global Investors: 2
+    AQR Capital Management: 1
+    Dorsal Capital: 1
+    Glenview Capital: 1
+    Lone Pine Capital: 1
+    Paulson & Co.: 1

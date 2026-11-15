@@ -1,0 +1,22 @@
+\begin{table}[t]
+  \caption{RQ1 robustness, hand-picked sample: mean per-fund accuracy of the per-fund majority
+  baseline and each model. The rolling protocol follows~\cite{cohen2026mimicking}: 20 training and
+  8 test quarters, four test blocks (2018Q3--2026Q2), one model per fund.}
+  \label{tab:robust}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Check & Baseline & Model & Gain \\
+    \midrule
+    Rolling protocol: LightGBM per fund & 58.1\% & 57.0\% & \ensuremath{-}1.1 \\
+    \quad logistic regression per fund & 58.1\% & 56.2\% & \ensuremath{-}1.9 \\
+    \quad LSTM per fund & 58.1\% & 58.8\% & +0.7 \\
+    \quad LightGBM pooled & 58.1\% & 60.6\% & +2.5 \\
+    BUY vs.\ SELL only (no HOLD) & 64.7\% & 67.4\% & +2.7 \\
+    HOLD band $\pm5\%$ instead of $\pm1\%$ & 56.4\% & 58.7\% & +2.3 \\
+    \midrule
+    Main result (Table~\ref{tab:rq1}) & 56.7\% & 60.8\% & +4.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

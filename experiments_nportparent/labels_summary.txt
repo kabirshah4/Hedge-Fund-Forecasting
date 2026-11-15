@@ -1,0 +1,39 @@
+labels: 227,989 rows, 59 funds, 2020-03-31 to 2026-06-30
+quarter pairs skipped because a fund missed a filing: 18
+rows kept by the top-500 universe filter: 82.7%
+stocks per quarter (mean): 495
+
+label share:
+label
+SELL    0.490
+BUY     0.338
+HOLD    0.172
+
+kind share:
+kind
+change          0.883
+full exit       0.060
+new position    0.056
+
+rows treated as stock splits: 1,586
+most common split factors:
+split_factor
+2.000     216
+3.000     201
+10.000    195
+4.000     182
+20.000    125
+5.000     111
+1.048      38
+1.500      34
+
+labels per year:
+label     BUY  HOLD   SELL
+period                    
+2020    15176  5775  20549
+2021    12251  7322  18744
+2022    12039  7092  15415
+2023    10605  6203  15009
+2024    10301  5445  16420
+2025    11512  5178  17008
+2026     5178  2261   8506

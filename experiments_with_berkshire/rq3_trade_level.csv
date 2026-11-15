@@ -1,0 +1,11 @@
+test,window,group,mean,t,quarters
+trade level,next_q,surprise trades,0.004933341424905121,2.2326783352745676,17
+trade level,next_q,predicted trades,-0.0005354549818428204,-0.3153105593655175,17
+trade level,next_q,surprise minus predicted,0.005468796406747941,1.6285749835572054,17
+BUY only: surprise minus predicted (raw return),next_q,BUY,0.0024736725547520825,0.874547551906165,17
+SELL only: surprise minus predicted (raw return),next_q,SELL,-0.00555131353219255,-1.8939218742326263,17
+trade level,post_filing,surprise trades,-0.002830989100817332,-1.0731664653926776,17
+trade level,post_filing,predicted trades,0.006515849130935508,1.9220985328353564,17
+trade level,post_filing,surprise minus predicted,-0.00934683823175284,-1.625489808187525,17
+BUY only: surprise minus predicted (raw return),post_filing,BUY,0.0022799618788716114,0.9411901310688143,17
+SELL only: surprise minus predicted (raw return),post_filing,SELL,-0.0034569573572168126,-1.6623268387805408,17

@@ -1,0 +1,19 @@
+\begin{table}[t]
+  \caption{By fund style, hand-picked sample. RQ1: gain in mean per-fund accuracy over the majority
+  baseline (points). RQ3: FF5 + momentum alpha of the spreads over the next quarter (\% per month,
+  Newey--West $t$); dashes where the predicted or surprise portfolio holds a median of fewer than 10 stocks per quarter.}
+  \label{tab:style}
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Style (funds in test) & Funds & RQ1 gain & RQ3 sells & RQ3 buys \\
+    \midrule
+    Long/short equity, growth & 21 & +2.0 & +0.07 (0.2) & +0.41 (1.0) \\
+    Activist / event-driven & 13 & +6.6 & -- & -- \\
+    Multi-strategy & 6 & +7.9 & +0.26 (2.8) & +0.08 (0.7) \\
+    Quantitative & 6 & +4.4 & +0.05 (0.3) & 0.00 (0.0) \\
+    Macro / value & 3 & \ensuremath{-}0.3 & -- & -- \\
+    \bottomrule
+  \end{tabular}
+\end{table}

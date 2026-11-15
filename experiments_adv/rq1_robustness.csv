@@ -1,0 +1,19 @@
+check,variant,model,mean_fund_accuracy,accuracy,rows,funds,auc,macro_f1
+Mimicking Finance protocol,2018Q3-2020Q2,majority (per fund),0.6097045111110609,0.6132060831781502,51552.0,82.0,,
+Mimicking Finance protocol,2018Q3-2020Q2,LightGBM per fund,0.5903029953245706,0.6158441961514587,51552.0,82.0,,
+Mimicking Finance protocol,2018Q3-2020Q2,LightGBM pooled,0.624587194656042,0.6410420546244568,51552.0,82.0,,
+Mimicking Finance protocol,2020Q3-2022Q2,majority (per fund),0.618959340197514,0.6046007630313566,44297.0,76.0,,
+Mimicking Finance protocol,2020Q3-2022Q2,LightGBM per fund,0.604348426290966,0.6197710905930425,44297.0,76.0,,
+Mimicking Finance protocol,2020Q3-2022Q2,LightGBM pooled,0.6473255620191246,0.6452581438923629,44297.0,76.0,,
+Mimicking Finance protocol,2022Q3-2024Q2,majority (per fund),0.6172453251037677,0.5772263766145479,44130.0,68.0,,
+Mimicking Finance protocol,2022Q3-2024Q2,LightGBM per fund,0.6115126061630962,0.6059370043054612,44130.0,68.0,,
+Mimicking Finance protocol,2022Q3-2024Q2,LightGBM pooled,0.638818298865665,0.6244504871969182,44130.0,68.0,,
+Mimicking Finance protocol,2024Q3-2026Q2,majority (per fund),0.5875075258938257,0.5640511236841512,44363.0,66.0,,
+Mimicking Finance protocol,2024Q3-2026Q2,LightGBM per fund,0.5821918989878775,0.6172486080742962,44363.0,66.0,,
+Mimicking Finance protocol,2024Q3-2026Q2,LightGBM pooled,0.6161712407831483,0.631922998895476,44363.0,66.0,,
+BUY vs SELL only,test 2022-2026,majority (per fund),0.6966012514757722,0.5940610693435255,95236.0,,,
+BUY vs SELL only,test 2022-2026,LightGBM,0.7038327863598498,0.6489037758830695,95236.0,,0.6677043157674049,
+HOLD band +-5%,"test classes {'SELL': 0.55, 'BUY': 0.372, 'HOLD': 0.078}",majority (per fund),0.5774280604010249,0.5497363689622432,99002.0,,,0.29128688122125695
+HOLD band +-5%,"test classes {'SELL': 0.55, 'BUY': 0.372, 'HOLD': 0.078}",LightGBM,0.6091919716138645,0.6075432819539,99002.0,,,0.44935333527697036
+Hedge funds only (drop Berkshire),main test predictions,majority (per fund),,,,0.0,,
+Hedge funds only (drop Berkshire),main test predictions,LightGBM,,,,0.0,,
